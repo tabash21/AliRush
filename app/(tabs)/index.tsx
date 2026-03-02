@@ -5,7 +5,9 @@ import { ThemedView } from "@/components/themed-view";
 import { useGameLoop } from "@/hooks/useGameLoop";
 import { GameState } from "@/types/game";
 import { Image } from "expo-image";
-import { StyleSheet, useColorScheme } from "react-native";
+import { useNavigation } from "expo-router";
+import { useEffect } from "react";
+import { Alert, StyleSheet, useColorScheme } from "react-native";
 
 export default function HomeScreen() {
   const colorScheme = useColorScheme();
@@ -31,6 +33,32 @@ export default function HomeScreen() {
     proceedToNextGroup,
     returnToSetup,
   } = useGameLoop();
+
+  const navigation = useNavigation() as any;
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("tabPress", (e: any) => {
+      if (gameState !== GameState.Setup) {
+        // Prevent default action
+        e.preventDefault();
+
+        Alert.alert(
+          "Quit Game?",
+          "Are you sure you want to quit the current game? All progress will be lost.",
+          [
+            { text: "Cancel", style: "cancel" },
+            {
+              text: "Quit",
+              style: "destructive",
+              onPress: () => returnToSetup(),
+            },
+          ],
+        );
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation, gameState, returnToSetup]);
 
   if (gameState !== GameState.Setup) {
     const currentWord =
