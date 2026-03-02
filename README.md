@@ -31,6 +31,8 @@ Offline Alias Game
 
 ## Game Images
 
-![Game Screenshot](./assets/images//homePage.jpeg)
-![Game Screenshot](./assets/images//gamePage.jpeg)
+<p float="left">
+  <img src="./assets/images/homePage.jpeg" width="300" />
+  <img src="./assets/images/gamePage.jpeg" width="300" />
+</p>
 
