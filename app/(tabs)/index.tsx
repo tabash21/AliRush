@@ -28,10 +28,12 @@ export default function HomeScreen() {
     timeLeft,
     pan,
     panResponder,
+    swipeHistory,
     startGame,
     startTurn,
     proceedToNextGroup,
     returnToSetup,
+    undoSwipe,
   } = useGameLoop();
 
   const navigation = useNavigation() as any;
@@ -68,6 +70,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.gameContainer}>
         <GameTurn
           gameState={gameState}
+          settings={settings}
           currentGroup={currentGroup}
           groupScores={groupScores}
           timeLeft={timeLeft}
@@ -75,12 +78,14 @@ export default function HomeScreen() {
           currentWord={currentWord}
           pan={pan}
           panResponderHandlers={panResponder.panHandlers}
+          swipeHistory={swipeHistory}
           isDark={isDark}
           chipBorderColor={chipBorderColor}
           chipBgActive={chipBgActive}
           onStartTurn={startTurn}
           onProceedToNextGroup={proceedToNextGroup}
           onReturnToSetup={returnToSetup}
+          onUndo={undoSwipe}
         />
       </ThemedView>
     );

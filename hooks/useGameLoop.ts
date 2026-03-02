@@ -23,6 +23,8 @@ export function useGameLoop() {
   const [timeLeft, setTimeLeft] = useState(0);
   const turnScoreRef = useRef(0);
 
+  const [swipeHistory, setSwipeHistory] = useState<("left" | "right")[]>([]);
+
   // Swiping State
   const pan = useRef(new Animated.ValueXY()).current;
   const panResponder = useRef(
@@ -77,6 +79,7 @@ export function useGameLoop() {
     setTurnScore(0);
     turnScoreRef.current = 0;
     setTimeLeft(settings.roundTimer);
+    setSwipeHistory([]);
     pan.setValue({ x: 0, y: 0 });
     setGameState(GameState.Playing);
   };
@@ -90,6 +93,24 @@ export function useGameLoop() {
       turnScoreRef.current -= 1;
     }
     setCurrentWordIndex((idx) => idx + 1);
+    setSwipeHistory((prev) => [...prev, direction]);
+    pan.setValue({ x: 0, y: 0 });
+  };
+
+  const undoSwipe = () => {
+    if (swipeHistory.length === 0 || currentWordIndex === 0) return;
+
+    const lastSwipe = swipeHistory[swipeHistory.length - 1];
+    setSwipeHistory((prev) => prev.slice(0, -1));
+
+    if (lastSwipe === "right") {
+      setTurnScore((s) => s - 1);
+      turnScoreRef.current -= 1;
+    } else {
+      setTurnScore((s) => s + 1);
+      turnScoreRef.current += 1;
+    }
+    setCurrentWordIndex((idx) => idx - 1);
     pan.setValue({ x: 0, y: 0 });
   };
 
@@ -130,9 +151,11 @@ export function useGameLoop() {
     timeLeft,
     pan,
     panResponder,
+    swipeHistory,
     startGame,
     startTurn,
     proceedToNextGroup,
     returnToSetup,
+    undoSwipe,
   };
 }
