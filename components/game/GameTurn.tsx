@@ -51,7 +51,6 @@ export function GameTurn({
           currentGroup={currentGroup}
           groupScores={groupScores}
           targetPoints={settings.targetPoints}
-          chipBgActive={chipBgActive}
           onStartTurn={onStartTurn}
         />
       )}
