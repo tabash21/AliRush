@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/aliRush-logo.jpg"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.tal_ben_shushan.aliRush"
     },
     "web": {
       "output": "static",
@@ -43,6 +44,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e01e4277-7e83-4a95-8cc1-3bf1901f935b"
+      }
     }
   }
 }

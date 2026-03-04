@@ -1,5 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { GameSettings, Language } from "../../types/game";
 
@@ -27,11 +28,11 @@ export function GameSetup({
   return (
     <>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">AliRush</ThemedText>
+        <ThemedText type="title">Game Settings</ThemedText>
       </ThemedView>
 
       <ThemedView style={styles.settingContainer}>
-        <ThemedText type="subtitle">Groups</ThemedText>
+        <ThemedText style={styles.sectionLabel}>GROUPS</ThemedText>
         <ThemedView style={styles.chipRow}>
           {[2, 3, 4, 5].map((num) => (
             <TouchableOpacity
@@ -46,7 +47,9 @@ export function GameSetup({
               ]}
               onPress={() => updateSetting("groupCount", num)}
             >
-              <ThemedText style={settings.groupCount === num ? styles.chipTextSelected : {}}>
+              <ThemedText
+                style={[styles.chipText, settings.groupCount === num && styles.chipTextSelected]}
+              >
                 {num}
               </ThemedText>
             </TouchableOpacity>
@@ -55,7 +58,7 @@ export function GameSetup({
       </ThemedView>
 
       <ThemedView style={styles.settingContainer}>
-        <ThemedText type="subtitle">Language</ThemedText>
+        <ThemedText style={styles.sectionLabel}>LANGUAGE</ThemedText>
         <ThemedView style={styles.chipRow}>
           {[
             { id: Language.English, label: "🇬🇧 ENG" },
@@ -73,7 +76,9 @@ export function GameSetup({
               ]}
               onPress={() => updateSetting("language", lang.id)}
             >
-              <ThemedText style={settings.language === lang.id ? styles.chipTextSelected : {}}>
+              <ThemedText
+                style={[styles.chipText, settings.language === lang.id && styles.chipTextSelected]}
+              >
                 {lang.label}
               </ThemedText>
             </TouchableOpacity>
@@ -82,7 +87,7 @@ export function GameSetup({
       </ThemedView>
 
       <ThemedView style={styles.settingContainer}>
-        <ThemedText type="subtitle">Round Timer</ThemedText>
+        <ThemedText style={styles.sectionLabel}>ROUND TIMER</ThemedText>
         <ThemedView style={styles.chipRow}>
           {[
             { val: 30, label: "30s" },
@@ -102,7 +107,12 @@ export function GameSetup({
               ]}
               onPress={() => updateSetting("roundTimer", time.val)}
             >
-              <ThemedText style={settings.roundTimer === time.val ? styles.chipTextSelected : {}}>
+              <ThemedText
+                style={[
+                  styles.chipText,
+                  settings.roundTimer === time.val && styles.chipTextSelected,
+                ]}
+              >
                 {time.label}
               </ThemedText>
             </TouchableOpacity>
@@ -111,7 +121,7 @@ export function GameSetup({
       </ThemedView>
 
       <ThemedView style={styles.settingContainer}>
-        <ThemedText type="subtitle">Target Points</ThemedText>
+        <ThemedText style={styles.sectionLabel}>TARGET POINTS</ThemedText>
         <ThemedView style={styles.stepperContainer}>
           <TouchableOpacity
             style={[styles.stepperButton, { backgroundColor: stepperBg }]}
@@ -133,6 +143,7 @@ export function GameSetup({
         style={[styles.playButton, { backgroundColor: chipBgActive }]}
         onPress={onStartGame}
       >
+        <MaterialIcons name="play-arrow" size={28} color="#fff" />
         <ThemedText style={styles.playButtonText}>Start Game</ThemedText>
       </TouchableOpacity>
     </>
@@ -150,24 +161,37 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 24,
   },
+  sectionLabel: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#6b829e",
+    letterSpacing: 1,
+    marginBottom: 4,
+  },
   chipRow: {
     flexDirection: "row",
     gap: 12,
-    flexWrap: "wrap",
+    width: "100%",
   },
   chip: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 1,
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 30,
+    borderWidth: 1.5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  chipText: {
+    fontWeight: "bold",
+    fontSize: 15,
   },
   chipTextSelected: {
     color: "#fff",
-    fontWeight: "bold",
   },
   stepperContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     gap: 24,
     marginTop: 8,
   },
@@ -179,9 +203,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   playButton: {
+    flexDirection: "row",
+    gap: 8,
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: "center",
+    justifyContent: "center",
     marginTop: 24,
     marginBottom: 40,
   },

@@ -59,6 +59,7 @@ export function GameTurn({
       {gameState === GameState.Playing && (
         <GamePlaying
           timeLeft={timeLeft}
+          roundTimer={settings.roundTimer}
           turnScore={turnScore}
           currentWord={currentWord}
           pan={pan}
