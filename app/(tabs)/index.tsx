@@ -38,7 +38,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const unsubscribe = navigation.addListener("tabPress", (e: any) => {
       if (gameState !== GameState.Setup) {
-        // Prevent default action
+        // Prevent default action 
         e.preventDefault();
 
         Alert.alert(

@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   pointsCard: {
-    backgroundColor: "#1e1e24", // dark navy/grey matches screenshot
+    backgroundColor: "#1e1e24",
     borderRadius: 20,
     paddingVertical: 24,
     alignItems: "center",
@@ -124,6 +124,9 @@ const styles = StyleSheet.create({
   pointsValue: {
     fontSize: 56,
     fontWeight: "900",
+    height: 45,
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   listsContainer: {
     flex: 1,

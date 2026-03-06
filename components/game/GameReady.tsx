@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   scoreboardContent: {
-    maxHeight: 120,
+    maxHeight: 125,
   },
   scoreboardLabel: {
     fontSize: 14,
@@ -186,16 +186,16 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   pulseGlow: {
-    width: 260,
-    height: 260,
+    width: 240,
+    height: 240,
     borderRadius: 140,
     backgroundColor: "rgba(231, 76, 60, 0.15)",
     justifyContent: "center",
     alignItems: "center",
   },
   actionCircleButton: {
-    width: 220,
-    height: 220,
+    width: 210,
+    height: 210,
     borderRadius: 110,
     backgroundColor: "#e74c3c",
     justifyContent: "center",
