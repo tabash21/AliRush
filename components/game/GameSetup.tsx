@@ -1,7 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { GameSettings, Language } from "../../types/game";
 
 interface SetupProps {
@@ -17,78 +16,48 @@ export function GameSetup({
   settings,
   setSettings,
   onStartGame,
-  chipBorderColor,
-  chipBgActive,
-  stepperBg,
 }: SetupProps) {
   const updateSetting = <K extends keyof GameSettings>(key: K, value: GameSettings[K]) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
-  return (
-    <>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Game Settings</ThemedText>
-      </ThemedView>
+  const primaryRed = "#e74c3c";   // Brighter red for play button and add icon
 
-      <ThemedView style={styles.settingContainer}>
-        <ThemedText style={styles.sectionLabel}>GROUPS</ThemedText>
-        <ThemedView style={styles.chipRow}>
+  return (
+    <View style={styles.container}>
+      {/* Number of Groups */}
+      <View style={styles.settingContainer}>
+        <View style={styles.labelRow}>
+          <Ionicons name="people" size={18} color={primaryRed} />
+          <ThemedText style={styles.sectionLabel}>NUMBER OF GROUPS</ThemedText>
+        </View>
+        <View style={styles.chipRow}>
           {[2, 3, 4, 5].map((num) => (
             <TouchableOpacity
               key={num}
               style={[
-                styles.chip,
-                { borderColor: chipBorderColor },
-                settings.groupCount === num && {
-                  backgroundColor: chipBgActive,
-                  borderColor: chipBgActive,
-                },
+                styles.groupChip,
+                settings.groupCount === num 
+                  ? { borderColor: primaryRed, backgroundColor: "rgba(211, 84, 0, 0.15)" }
+                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" }
               ]}
               onPress={() => updateSetting("groupCount", num)}
             >
-              <ThemedText
-                style={[styles.chipText, settings.groupCount === num && styles.chipTextSelected]}
-              >
+              <ThemedText style={[styles.chipText, settings.groupCount === num && { color: "#fff" }]}>
                 {num}
               </ThemedText>
             </TouchableOpacity>
           ))}
-        </ThemedView>
-      </ThemedView>
+        </View>
+      </View>
 
-      <ThemedView style={styles.settingContainer}>
-        <ThemedText style={styles.sectionLabel}>LANGUAGE</ThemedText>
-        <ThemedView style={styles.chipRow}>
-          {[
-            { id: Language.English, label: "🇬🇧 ENG" },
-            { id: Language.Hebrew, label: "🇮🇱 HEB" },
-          ].map((lang) => (
-            <TouchableOpacity
-              key={lang.id}
-              style={[
-                styles.chip,
-                { borderColor: chipBorderColor },
-                settings.language === lang.id && {
-                  backgroundColor: chipBgActive,
-                  borderColor: chipBgActive,
-                },
-              ]}
-              onPress={() => updateSetting("language", lang.id)}
-            >
-              <ThemedText
-                style={[styles.chipText, settings.language === lang.id && styles.chipTextSelected]}
-              >
-                {lang.label}
-              </ThemedText>
-            </TouchableOpacity>
-          ))}
-        </ThemedView>
-      </ThemedView>
-
-      <ThemedView style={styles.settingContainer}>
-        <ThemedText style={styles.sectionLabel}>ROUND TIMER</ThemedText>
-        <ThemedView style={styles.chipRow}>
+      {/* Round Timer */}
+      <View style={styles.settingContainer}>
+        <View style={styles.labelRow}>
+          <Ionicons name="timer-outline" size={18} color={primaryRed} />
+          <ThemedText style={styles.sectionLabel}>ROUND TIMER</ThemedText>
+        </View>
+        <View style={styles.timerGrid}>
           {[
             { val: 30, label: "30s" },
             { val: 60, label: "1m" },
@@ -98,123 +67,197 @@ export function GameSetup({
             <TouchableOpacity
               key={time.val}
               style={[
-                styles.chip,
-                { borderColor: chipBorderColor },
-                settings.roundTimer === time.val && {
-                  backgroundColor: chipBgActive,
-                  borderColor: chipBgActive,
-                },
+                styles.timerChip,
+                settings.roundTimer === time.val
+                  ? { borderColor: primaryRed, backgroundColor: "rgba(211, 84, 0, 0.15)" }
+                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" }
               ]}
               onPress={() => updateSetting("roundTimer", time.val)}
             >
-              <ThemedText
-                style={[
-                  styles.chipText,
-                  settings.roundTimer === time.val && styles.chipTextSelected,
-                ]}
-              >
+              <ThemedText style={[styles.chipText, settings.roundTimer === time.val && { color: "#fff" }]}>
                 {time.label}
               </ThemedText>
             </TouchableOpacity>
           ))}
-        </ThemedView>
-      </ThemedView>
+        </View>
+      </View>
 
-      <ThemedView style={styles.settingContainer}>
-        <ThemedText style={styles.sectionLabel}>TARGET POINTS</ThemedText>
-        <ThemedView style={styles.stepperContainer}>
+      {/* Language Selection */}
+      <View style={styles.settingContainer}>
+        <View style={styles.labelRow}>
+          <Ionicons name="globe-outline" size={18} color={primaryRed} />
+          <ThemedText style={styles.sectionLabel}>LANGUAGE SELECTION</ThemedText>
+        </View>
+        <View style={styles.chipRow}>
+          {[
+            { id: Language.English, label: "ENG", flag: "🇬🇧" },
+            { id: Language.Hebrew, label: "HEB", flag: "🇮🇱" },
+          ].map((lang) => (
+            <TouchableOpacity
+              key={lang.id}
+              style={[
+                styles.langChip,
+                settings.language === lang.id
+                  ? { borderColor: primaryRed, backgroundColor: "rgba(211, 84, 0, 0.15)" }
+                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" }
+              ]}
+              onPress={() => updateSetting("language", lang.id)}
+            >
+              <View style={styles.langInner}>
+                <ThemedText style={styles.flagText}>{lang.flag}</ThemedText>
+                <ThemedText style={[styles.chipText, settings.language === lang.id && { color: "#fff" }]}>
+                  {lang.label}
+                </ThemedText>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      {/* Target Points */}
+      <View style={styles.settingContainer}>
+        <View style={styles.labelRow}>
+          <Ionicons name="trophy-outline" size={18} color={primaryRed} />
+          <ThemedText style={styles.sectionLabel}>TARGET POINTS</ThemedText>
+        </View>
+        <View style={styles.stepperPill}>
           <TouchableOpacity
-            style={[styles.stepperButton, { backgroundColor: stepperBg }]}
+            style={styles.stepperBtn}
             onPress={() => updateSetting("targetPoints", Math.max(50, settings.targetPoints - 10))}
           >
-            <ThemedText type="subtitle">-</ThemedText>
+            <Ionicons name="remove" size={24} color="#FFF" />
           </TouchableOpacity>
-          <ThemedText type="title">{settings.targetPoints}</ThemedText>
+          <ThemedText style={styles.pointsText}>{settings.targetPoints}</ThemedText>
           <TouchableOpacity
-            style={[styles.stepperButton, { backgroundColor: stepperBg }]}
+            style={[styles.stepperBtn, { backgroundColor: "rgba(231, 76, 60, 0.1)" }]}
             onPress={() => updateSetting("targetPoints", Math.min(150, settings.targetPoints + 10))}
           >
-            <ThemedText type="subtitle">+</ThemedText>
+            <Ionicons name="add" size={24} color={primaryRed} />
           </TouchableOpacity>
-        </ThemedView>
-      </ThemedView>
+        </View>
+      </View>
 
       <TouchableOpacity
-        style={[styles.playButton, { backgroundColor: chipBgActive }]}
+        style={[styles.playButton, { backgroundColor: primaryRed }]}
         onPress={onStartGame}
       >
-        <MaterialIcons name="play-arrow" size={28} color="#fff" />
-        <ThemedText style={styles.playButtonText}>Start Game</ThemedText>
+        <Ionicons name="play" size={22} color="#fff" />
+        <ThemedText style={styles.playButtonText}>START GAME</ThemedText>
       </TouchableOpacity>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    marginBottom: 24,
+  container: {
+    gap: 25,
+    paddingTop: 10,
+    marginBottom: 40,
   },
   settingContainer: {
     gap: 12,
-    marginBottom: 24,
+  },
+  labelRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 8,
   },
   sectionLabel: {
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: "800",
     color: "#6b829e",
     letterSpacing: 1,
-    marginBottom: 4,
   },
   chipRow: {
     flexDirection: "row",
     gap: 12,
-    width: "100%",
   },
-  chip: {
+  groupChip: {
     flex: 1,
-    paddingVertical: 14,
-    borderRadius: 30,
-    borderWidth: 1.5,
+    height: 70,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+  },
+  timerGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 12,
+  },
+  timerChip: {
+    width: "48%",
+    height: 50,
+    borderRadius: 14,
+    borderWidth: 2,
+    borderColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  langChip: {
+    flex: 1,
+    height: 60,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  langInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  flagText: {
+    fontSize: 22,
   },
   chipText: {
-    fontWeight: "bold",
-    fontSize: 15,
+    fontWeight: "900",
+    fontSize: 18,
+    color: "#6b829e",
   },
-  chipTextSelected: {
-    color: "#fff",
-  },
-  stepperContainer: {
+  stepperPill: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 24,
-    marginTop: 8,
+    justifyContent: "space-between",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: 18,
+    padding: 8,
+    width: "100%",
   },
-  stepperButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  playButton: {
-    flexDirection: "row",
-    gap: 8,
-    paddingVertical: 16,
+  stepperBtn: {
+    width: 50,
+    height: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 24,
-    marginBottom: 40,
+  },
+  pointsText: {
+    fontSize: 32,
+    fontWeight: "900",
+    color: "#FFF",
+  },
+  playButton: {
+    flexDirection: "row",
+    height: 65,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    marginTop: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   playButtonText: {
     color: "#fff",
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "900",
+    letterSpacing: 2,
   },
 });

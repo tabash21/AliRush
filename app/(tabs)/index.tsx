@@ -13,8 +13,9 @@ import { Alert, StyleSheet, useColorScheme } from "react-native";
 export default function HomeScreen() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
+  const primaryRed = "#e74c3c";
   const chipBorderColor = isDark ? "#444" : "#ccc";
-  const chipBgActive = isDark ? "#2e78b7" : "#0a7ea4";
+  const chipBgActive = primaryRed;
   const stepperBg = isDark ? "#333" : "#e0e0e0";
 
   const {
@@ -107,7 +108,7 @@ export default function HomeScreen() {
         setSettings={setSettings}
         onStartGame={startGame}
         chipBorderColor={chipBorderColor}
-        chipBgActive={chipBgActive}
+        chipBgActive={primaryRed}
         stepperBg={stepperBg}
       />
     </ParallaxScrollView>

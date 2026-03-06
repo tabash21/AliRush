@@ -32,6 +32,31 @@ export function GamePlaying() {
     outputRange: ["#e74c3c", "#000", "#2ecc71"],
   });
 
+  // Scale and opacity for hints to show they react to swiping
+  const leftHintScale = pan.x.interpolate({
+    inputRange: [-150, -50, 0],
+    outputRange: [1.3, 1.1, 1],
+    extrapolate: "clamp",
+  });
+
+  const rightHintScale = pan.x.interpolate({
+    inputRange: [0, 50, 150],
+    outputRange: [1, 1.1, 1.3],
+    extrapolate: "clamp",
+  });
+
+  const leftHintOpacity = pan.x.interpolate({
+    inputRange: [-100, 0],
+    outputRange: [1, 0.5],
+    extrapolate: "clamp",
+  });
+
+  const rightHintOpacity = pan.x.interpolate({
+    inputRange: [0, 100],
+    outputRange: [0.5, 1],
+    extrapolate: "clamp",
+  });
+
   const insets = useSafeAreaInsets();
 
   // Calculate elapsed time progression 0 to 100 scale
@@ -101,21 +126,23 @@ export function GamePlaying() {
       </Animated.View>
 
       <View style={styles.swipeHints}>
-        <View style={styles.hintBox}>
+        <Animated.View style={[styles.hintBox, { opacity: leftHintOpacity, transform: [{ scale: leftHintScale }] }]}>
           <View style={[styles.iconCircle, { backgroundColor: "rgba(231, 76, 60, 0.15)" }]}>
-            <MaterialIcons name="arrow-back" size={32} color="#e74c3c" />
+            <MaterialIcons name="keyboard-double-arrow-left" size={32} color="#e74c3c" />
           </View>
-          <ThemedText style={[styles.hintSub, { color: "#e74c3c", marginTop: 8 }]}>Skip</ThemedText>
-        </View>
+          <ThemedText style={[styles.hintSub, { color: "#e74c3c", marginTop: 8 }]}>SWIPE LEFT</ThemedText>
+          <ThemedText style={{ fontSize: 10, fontWeight: "900", color: "#e74c3c", opacity: 0.8 }}>SKIP</ThemedText>
+        </Animated.View>
+
         <View style={[styles.hintBox, { alignItems: "center" }]}>{/* spacer */}</View>
-        <View style={[styles.hintBox, { alignItems: "flex-end" }]}>
+
+        <Animated.View style={[styles.hintBox, { alignItems: "flex-end", opacity: rightHintOpacity, transform: [{ scale: rightHintScale }] }]}>
           <View style={[styles.iconCircle, { backgroundColor: "rgba(46, 204, 113, 0.15)" }]}>
-            <MaterialIcons name="arrow-forward" size={32} color="#2ecc71" />
+            <MaterialIcons name="keyboard-double-arrow-right" size={32} color="#2ecc71" />
           </View>
-          <ThemedText style={[styles.hintSub, { color: "#2ecc71", marginTop: 8 }]}>
-            Success
-          </ThemedText>
-        </View>
+          <ThemedText style={[styles.hintSub, { color: "#2ecc71", marginTop: 8 }]}>SWIPE RIGHT</ThemedText>
+          <ThemedText style={{ fontSize: 10, fontWeight: "900", color: "#2ecc71", opacity: 0.8 }}>SUCCESS</ThemedText>
+        </Animated.View>
       </View>
 
       <View style={styles.undoContainer}>

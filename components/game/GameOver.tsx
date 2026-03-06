@@ -21,7 +21,7 @@ export function GameOver() {
   const cardBg = isDark ? "#2A2A2A" : "#FFFFFF";
   const rowBgSecondary = isDark ? "rgba(255, 255, 255, 0.05)" : "#F5F5F7";
   const winnerColor = "#FFD700"; // Gold color for winner name
-  const primaryRed = "#D32F2F"; // Primary color from mockup
+  const primaryRed = "#e74c3c"; // Primary color from mockup
 
   return (
     <View style={styles.container}>
