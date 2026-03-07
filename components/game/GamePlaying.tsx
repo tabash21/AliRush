@@ -126,30 +126,43 @@ export function GamePlaying() {
       </Animated.View>
 
       <View style={styles.swipeHints}>
-        <Animated.View style={[styles.hintBox, { opacity: leftHintOpacity, transform: [{ scale: leftHintScale }] }]}>
+        <Animated.View
+          style={[
+            styles.hintBox,
+            { opacity: leftHintOpacity, transform: [{ scale: leftHintScale }] },
+          ]}
+        >
           <View style={[styles.iconCircle, { backgroundColor: "rgba(231, 76, 60, 0.15)" }]}>
             <MaterialIcons name="keyboard-double-arrow-left" size={32} color="#e74c3c" />
           </View>
           {/* <ThemedText style={[styles.hintSub, { color: "#e74c3c", marginTop: 8 }]}>SWIPE LEFT</ThemedText> */}
-          <ThemedText style={{ fontSize: 10, fontWeight: "900", color: "#e74c3c", opacity: 0.8 }}>SKIP</ThemedText>
+          <ThemedText style={{ fontSize: 10, fontWeight: "900", color: "#e74c3c", opacity: 0.8 }}>
+            SKIP
+          </ThemedText>
         </Animated.View>
 
         <View style={[styles.hintBox, { alignItems: "center" }]}>{/* spacer */}</View>
 
-        <Animated.View style={[styles.hintBox, { opacity: rightHintOpacity, transform: [{ scale: rightHintScale }] }]}>
+        <Animated.View
+          style={[
+            styles.hintBox,
+            { opacity: rightHintOpacity, transform: [{ scale: rightHintScale }] },
+          ]}
+        >
           <View style={[styles.iconCircle, { backgroundColor: "rgba(46, 204, 113, 0.15)" }]}>
             <MaterialIcons name="keyboard-double-arrow-right" size={32} color="#2ecc71" />
           </View>
           {/* <ThemedText style={[styles.hintSub, { color: "#2ecc71", marginTop: 8 }]}>SWIPE</ThemedText> */}
-          <ThemedText style={{ fontSize: 10, fontWeight: "900", color: "#2ecc71", opacity: 0.8 }}>SUCCESS</ThemedText>
+          <ThemedText style={{ fontSize: 10, fontWeight: "900", color: "#2ecc71", opacity: 0.8 }}>
+            SUCCESS
+          </ThemedText>
         </Animated.View>
       </View>
 
       <View style={styles.undoContainer}>
         {canUndo && (
           <TouchableOpacity onPress={undoSwipe} style={styles.undoButton}>
-            <IconSymbol size={24} name="arrow.uturn.backward" color={isDark ? "#fff" : "#000"} />
-            <ThemedText style={{ marginLeft: 8, fontWeight: "600" }}>Undo Swipe</ThemedText>
+            <ThemedText style={{ fontWeight: "600" }}>Undo Swipe</ThemedText>
           </TouchableOpacity>
         )}
       </View>
@@ -277,8 +290,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   undoButton: {
-    flexDirection: "row",
-    alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 20,
     backgroundColor: "rgba(100, 100, 100, 0.2)",
