@@ -116,7 +116,7 @@ export function TurnProvider({
       timer = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
-            onTurnEnd(turnScoreRef.current);
+            setTimeout(() => onTurnEnd(turnScoreRef.current), 0);
             return 0;
           }
           return prev - 1;

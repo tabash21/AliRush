@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "aliRush",
-    "slug": "aliRush",
+    "name": "AliRush",
+    "slug": "AliRush",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-logo.png",
@@ -30,7 +30,7 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/aliRush-round-logo.jpg",
-          "imageWidth": 200,
+          "imageWidth": 200,  
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {

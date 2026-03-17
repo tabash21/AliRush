@@ -24,7 +24,7 @@ export function GameTurnEnd() {
       {/* Header section */}
       <View style={styles.header}>
         <ThemedText style={styles.mainTitle}>Round Over!</ThemedText>
-        <ThemedText style={styles.subTitle}>Team {currentGroup + 1}'s Turn</ThemedText>
+        <ThemedText style={styles.subTitle}>Team {currentGroup + 1}&apos;s Turn</ThemedText>
       </View>
 
       {/* Points Earned Card */}
@@ -77,7 +77,7 @@ export function GameTurnEnd() {
         onPress={onProceedToNextGroup}
         activeOpacity={0.8}
       >
-        <ThemedText style={styles.nextButtonText}>NEXT TEAM'S TURN</ThemedText>
+        <ThemedText style={styles.nextButtonText}>NEXT TEAM&apos;S TURN</ThemedText>
         <MaterialIcons name="arrow-forward" size={24} color="#fff" />
       </TouchableOpacity>
     </View>
