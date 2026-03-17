@@ -12,6 +12,8 @@ export function GamePlaying() {
   const { timeLeft, turnScore, pan, panResponderHandlers, undoSwipe, swipeHistory } =
     useTurnContext();
 
+  const hintPulse = useRef(new Animated.Value(0.4)).current;
+
   const roundTimer = settings.roundTimer;
   const canUndo = swipeHistory.length > 0;
   // Interpolate side swipe to create dynamic border colors indicating the action
@@ -71,6 +73,25 @@ export function GamePlaying() {
       useNativeDriver: false,
     }).start();
   }, [timeLeft, roundTimer]);
+
+  useEffect(() => {
+    if (!canUndo) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(hintPulse, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+          Animated.timing(hintPulse, {
+            toValue: 0.4,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+        ]),
+      ).start();
+    }
+  }, [canUndo]);
 
   const progressWidth = progressAnim.interpolate({
     inputRange: [0, 100],
@@ -160,10 +181,16 @@ export function GamePlaying() {
       </View>
 
       <View style={styles.undoContainer}>
-        {canUndo && (
+        {canUndo ? (
           <TouchableOpacity onPress={undoSwipe} style={styles.undoButton}>
             <ThemedText style={{ fontWeight: "600" }}>Undo Swipe</ThemedText>
           </TouchableOpacity>
+        ) : (
+          <Animated.View style={{ opacity: hintPulse }}>
+            <ThemedText style={styles.swipeHintText}>
+              {"« Swipe Left or Right »"}
+            </ThemedText>
+          </Animated.View>
         )}
       </View>
     </View>
@@ -295,5 +322,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "rgba(100, 100, 100, 0.2)",
     borderRadius: 20,
+  },
+  swipeHintText: {
+    fontSize: 14,
+    fontWeight: "800",
+    color: "#888",
+    letterSpacing: 1,
+    textTransform: "uppercase",
   },
 });
