@@ -1,16 +1,46 @@
 import { ThemedText } from "@/components/themed-text";
-import { IconSymbol } from "@/components/ui/icon-symbol";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useAudioPlayer } from "expo-audio";
 import { useEffect, useRef } from "react";
-import { Animated, Modal, StyleSheet, TouchableOpacity, View, Vibration } from "react-native";
+import {
+  Animated,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  Vibration,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useGameContext, useTurnContext } from "../../context/GameContext";
 
+const TICK_SOUND = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg";
+const END_SOUND =
+  "https://actions.google.com/sounds/v1/emergency/emergency_siren_short_burst.ogg";
+
 export function GamePlaying() {
-  const { settings, currentWord, isDark, chipBorderColor, assignLastWordPoint, lastWordWinner } = useGameContext();
-  const { timeLeft, turnScore, pan, panResponderHandlers, undoSwipe, swipeHistory, isLastWordMode, onTurnEnd, showWinnerModal, setShowWinnerModal } =
-    useTurnContext();
+  const {
+    settings,
+    currentWord,
+    isDark,
+    chipBorderColor,
+    assignLastWordPoint,
+  } = useGameContext();
+  const {
+    timeLeft,
+    turnScore,
+    pan,
+    panResponderHandlers,
+    undoSwipe,
+    swipeHistory,
+    isLastWordMode,
+    onTurnEnd,
+    showWinnerModal,
+    setShowWinnerModal,
+  } = useTurnContext();
+
+  const tickPlayer = useAudioPlayer(TICK_SOUND);
+  const endPlayer = useAudioPlayer(END_SOUND);
 
   const hintPulse = useRef(new Animated.Value(0.4)).current;
 
@@ -19,7 +49,11 @@ export function GamePlaying() {
   // Interpolate side swipe to create dynamic border colors indicating the action
   const dynamicBorderColor = pan.x.interpolate({
     inputRange: [-100, 0, 100],
-    outputRange: ["rgba(231, 76, 60, 1)", chipBorderColor, "rgba(46, 204, 113, 1)"],
+    outputRange: [
+      "rgba(231, 76, 60, 1)",
+      chipBorderColor,
+      "rgba(46, 204, 113, 1)",
+    ],
     extrapolate: "clamp",
   });
 
@@ -28,7 +62,7 @@ export function GamePlaying() {
     outputRange: [0.8, 0.4, 0.1, 0.4, 0.8],
     extrapolate: "clamp",
   });
-  
+
   // Scale and opacity for hints to show they react to swiping
   const leftHintScale = pan.x.interpolate({
     inputRange: [-150, -50, 0],
@@ -61,21 +95,27 @@ export function GamePlaying() {
 
   const progressAnim = useRef(new Animated.Value(timePassedPercentage)).current;
 
+  // Handle timer-based logic (progress animation, ticking sound, and end signal)
   useEffect(() => {
+    // 1. Progress Bar Animation
     Animated.timing(progressAnim, {
       toValue: ((roundTimer - timeLeft) / roundTimer) * 100,
       duration: 1000,
       useNativeDriver: false,
     }).start();
-  }, [timeLeft, roundTimer]);
 
-  useEffect(() => {
-    if (isLastWordMode && timeLeft === 0) {
-      // Alert everyone! 
-      Vibration.vibrate([0, 500, 200, 500]); 
-      // Sound would go here if expo-av was available
+    // 2. Audio: Tick sound for last 5 seconds
+    if (timeLeft <= 5 && timeLeft > 0) {
+      tickPlayer.play();
+      tickPlayer.seekTo(0);
     }
-  }, [isLastWordMode, timeLeft]);
+
+    // 3. Audio & Haptics: Round end signal
+    if (isLastWordMode && timeLeft === 0) {
+      Vibration.vibrate(500);
+      endPlayer.play();
+    }
+  }, [timeLeft, roundTimer, isLastWordMode]);
 
   useEffect(() => {
     if (!canUndo) {
@@ -138,7 +178,11 @@ export function GamePlaying() {
         style={[
           styles.card,
           {
-            backgroundColor: isLastWordMode ? "rgba(255, 25, 25, 0.55)" : (isDark ? "#222" : "#fdfdfd"),
+            backgroundColor: isLastWordMode
+              ? "rgba(255, 25, 25, 0.55)"
+              : isDark
+                ? "#222"
+                : "#fdfdfd",
             borderColor: dynamicBorderColor,
             shadowOpacity: dynamicShadowOpacity,
           },
@@ -160,26 +204,63 @@ export function GamePlaying() {
             { opacity: leftHintOpacity, transform: [{ scale: leftHintScale }] },
           ]}
         >
-          <View style={[styles.iconCircle, { backgroundColor: "rgba(231, 76, 60, 0.15)" }]}>
-            <MaterialIcons name="keyboard-double-arrow-left" size={32} color="#e74c3c" />
+          <View
+            style={[
+              styles.iconCircle,
+              { backgroundColor: "rgba(231, 76, 60, 0.15)" },
+            ]}
+          >
+            <MaterialIcons
+              name="keyboard-double-arrow-left"
+              size={32}
+              color="#e74c3c"
+            />
           </View>
-          <ThemedText style={{ fontSize: 10, fontWeight: "900", color: "#e74c3c", opacity: 0.8 }}>
+          <ThemedText
+            style={{
+              fontSize: 10,
+              fontWeight: "900",
+              color: "#e74c3c",
+              opacity: 0.8,
+            }}
+          >
             SKIP
           </ThemedText>
         </Animated.View>
 
-        <View style={[styles.hintBox, { alignItems: "center" }]}>{/* spacer */}</View>
+        <View style={[styles.hintBox, { alignItems: "center" }]}>
+          {/* spacer */}
+        </View>
 
         <Animated.View
           style={[
             styles.hintBox,
-            { opacity: rightHintOpacity, transform: [{ scale: rightHintScale }] },
+            {
+              opacity: rightHintOpacity,
+              transform: [{ scale: rightHintScale }],
+            },
           ]}
         >
-          <View style={[styles.iconCircle, { backgroundColor: "rgba(46, 204, 113, 0.15)" }]}>
-            <MaterialIcons name="keyboard-double-arrow-right" size={32} color="#2ecc71" />
+          <View
+            style={[
+              styles.iconCircle,
+              { backgroundColor: "rgba(46, 204, 113, 0.15)" },
+            ]}
+          >
+            <MaterialIcons
+              name="keyboard-double-arrow-right"
+              size={32}
+              color="#2ecc71"
+            />
           </View>
-          <ThemedText style={{ fontSize: 10, fontWeight: "900", color: "#2ecc71", opacity: 0.8 }}>
+          <ThemedText
+            style={{
+              fontSize: 10,
+              fontWeight: "900",
+              color: "#2ecc71",
+              opacity: 0.8,
+            }}
+          >
             SUCCESS
           </ThemedText>
         </Animated.View>
@@ -187,10 +268,14 @@ export function GamePlaying() {
 
       <View style={styles.undoContainer}>
         {isLastWordMode ? (
-           <View style={styles.lastWordInstructions}>
-              <ThemedText style={styles.instructionText}>ALL TEAMS GUESS!</ThemedText>
-              <ThemedText style={styles.instructionSubText}>Swipe when someone wins</ThemedText>
-           </View>
+          <View style={styles.lastWordInstructions}>
+            <ThemedText style={styles.instructionText}>
+              ALL TEAMS GUESS!
+            </ThemedText>
+            <ThemedText style={styles.instructionSubText}>
+              Swipe when someone wins
+            </ThemedText>
+          </View>
         ) : canUndo ? (
           <TouchableOpacity onPress={undoSwipe} style={styles.undoButton}>
             <ThemedText style={{ fontWeight: "600" }}>Undo Swipe</ThemedText>
@@ -212,10 +297,17 @@ export function GamePlaying() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <MaterialIcons name="emoji-events" size={48} color="#FFD700" style={{ marginBottom: 10 }} />
+            <MaterialIcons
+              name="emoji-events"
+              size={48}
+              color="#FFD700"
+              style={{ marginBottom: 10 }}
+            />
             <ThemedText style={styles.modalTitle}>Last Word Winner!</ThemedText>
-            <ThemedText style={styles.modalSubTitle}>Who guessed it correctly?</ThemedText>
-            
+            <ThemedText style={styles.modalSubTitle}>
+              Who guessed it correctly?
+            </ThemedText>
+
             <View style={styles.winnerGrid}>
               {Array.from({ length: settings.groupCount }).map((_, i) => (
                 <TouchableOpacity
@@ -227,17 +319,19 @@ export function GamePlaying() {
                   }}
                   style={styles.winnerBtn}
                 >
-                  <ThemedText style={styles.winnerBtnText}>TEAM {i + 1}</ThemedText>
+                  <ThemedText style={styles.winnerBtnText}>
+                    TEAM {i + 1}
+                  </ThemedText>
                 </TouchableOpacity>
               ))}
             </View>
 
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => {
                 assignLastWordPoint(null);
                 setShowWinnerModal(false);
                 onTurnEnd();
-              }} 
+              }}
               style={styles.noWinnerBtn}
             >
               <ThemedText style={styles.noWinnerBtnText}>NO ONE</ThemedText>

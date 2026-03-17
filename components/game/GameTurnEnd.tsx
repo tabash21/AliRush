@@ -12,7 +12,6 @@ export function GameTurnEnd() {
     currentWords, 
     onProceedToNextGroup, 
     lastWordWinner, 
-    assignLastWordPoint 
   } = useGameContext();
   const { turnScore, swipeHistory, toggleSwipe, isLastWordMode } = useTurnContext();
 
