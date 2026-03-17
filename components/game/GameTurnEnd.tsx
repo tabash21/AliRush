@@ -5,8 +5,16 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useGameContext, useTurnContext } from "../../context/GameContext";
 
 export function GameTurnEnd() {
-  const { currentGroup, currentWordIndex, currentWords, onProceedToNextGroup } = useGameContext();
-  const { turnScore, swipeHistory, toggleSwipe } = useTurnContext();
+  const { 
+    settings, 
+    currentGroup, 
+    currentWordIndex, 
+    currentWords, 
+    onProceedToNextGroup, 
+    lastWordWinner, 
+    assignLastWordPoint 
+  } = useGameContext();
+  const { turnScore, swipeHistory, toggleSwipe, isLastWordMode } = useTurnContext();
 
   const startIndex = currentWordIndex - swipeHistory.length;
 
@@ -16,8 +24,11 @@ export function GameTurnEnd() {
     swipe,
   }));
 
-  const correctWords = wordEntries.filter((e) => e.swipe === "right");
-  const failedWords = wordEntries.filter((e) => e.swipe === "left");
+  // Exclude the last word from the main list if it was a "Last Word" swipe
+  const displayEntries = isLastWordMode ? wordEntries.slice(0, -1) : wordEntries;
+
+  const correctWords = displayEntries.filter((e) => e.swipe === "right");
+  const failedWords = displayEntries.filter((e) => e.swipe === "left");
 
   return (
     <View style={styles.container}>
@@ -36,6 +47,27 @@ export function GameTurnEnd() {
       </View>
 
       <ScrollView style={styles.listsContainer} showsVerticalScrollIndicator={false}>
+  {/* Last Word Section */}
+  {settings.lastWordForAll && isLastWordMode && swipeHistory[swipeHistory.length - 1] === "right" && (
+    <View style={styles.listSection}>
+      <View style={styles.listHeader}>
+        <MaterialCommunityIcons name="trophy-variant" size={20} color="#FFD700" />
+        <ThemedText style={styles.listTitle}>Last Word Winner</ThemedText>
+      </View>
+      <View style={styles.lastWordWinnerStatusInfo}>
+        {lastWordWinner !== null ? (
+          <View style={styles.winnerInfoPill}>
+            <MaterialCommunityIcons name="star" size={20} color="#FFD700" />
+            <ThemedText style={styles.winnerInfoText}>
+              TEAM {lastWordWinner + 1} EARNED THE POINT!
+            </ThemedText>
+          </View>
+        ) : (
+          <ThemedText style={styles.noWinnerInfoText}>NO TEAM GUESSED CORRECTLY</ThemedText>
+        )}
+      </View>
+    </View>
+  )}
         {/* Correct Words */}
         {correctWords.length > 0 && (
           <View style={styles.listSection}>
@@ -87,6 +119,7 @@ export function GameTurnEnd() {
             ))}
           </View>
         )}
+
       </ScrollView>
 
       {/* Footer Button */}
@@ -183,6 +216,49 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     backgroundColor: "rgba(255, 255, 255, 0.05)",
+  },
+  lastWordWinnerStatusInfo: {
+    marginTop: 8,
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: 15,
+    padding: 15,
+    alignItems: "center",
+  },
+  winnerInfoPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  winnerInfoText: {
+    fontWeight: "900",
+    color: "#FFD700",
+    fontSize: 14,
+  },
+  noWinnerInfoText: {
+    color: "#888",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+  groupPickBtn: {
+    flex: 1,
+    minWidth: "45%",
+    paddingVertical: 12,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(100, 100, 100, 0.2)",
+    alignItems: "center",
+  },
+  groupPickBtnActive: {
+    backgroundColor: "#FFD700",
+    borderColor: "#FFD700",
+  },
+  groupPickText: {
+    fontWeight: "800",
+    fontSize: 12,
+    color: "#888",
+  },
+  groupPickTextActive: {
+    color: "#000",
   },
   correctWordCard: {
     backgroundColor: "rgba(46, 204, 113, 0.15)",

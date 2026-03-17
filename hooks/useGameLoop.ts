@@ -7,11 +7,13 @@ export function useGameLoop() {
     language: Language.English,
     roundTimer: 60,
     targetPoints: 90,
+    lastWordForAll: true,
   });
 
   const [gameState, setGameState] = useState<GameState>(GameState.Setup);
   const [groupScores, setGroupScores] = useState<number[]>([]);
   const [currentGroup, setCurrentGroup] = useState(0);
+  const [lastWordWinner, setLastWordWinner] = useState<number | null>(null);
 
   const [currentWords, setCurrentWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -26,6 +28,7 @@ export function useGameLoop() {
     setCurrentWordIndex(0);
     setGroupScores(new Array(settings.groupCount).fill(0));
     setCurrentGroup(0);
+    setLastWordWinner(null);
     setGameState(GameState.Ready);
   };
 
@@ -66,6 +69,17 @@ export function useGameLoop() {
     setGameState(GameState.Setup);
   };
 
+  const assignLastWordPoint = (groupIndex: number | null) => {
+    setLastWordWinner(groupIndex);
+    if (groupIndex !== null) {
+      setGroupScores((prev) => {
+        const newScores = [...prev];
+        newScores[groupIndex] += 1;
+        return newScores;
+      });
+    }
+  };
+
   const updateGroupScore = (diff: number) => {
     setGroupScores((prev) => {
       const newScores = [...prev];
@@ -89,5 +103,7 @@ export function useGameLoop() {
     proceedToNextGroup,
     returnToSetup,
     updateGroupScore,
+    lastWordWinner,
+    assignLastWordPoint,
   };
 }

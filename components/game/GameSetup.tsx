@@ -12,16 +12,15 @@ interface SetupProps {
   stepperBg: string;
 }
 
-export function GameSetup({
-  settings,
-  setSettings,
-  onStartGame,
-}: SetupProps) {
-  const updateSetting = <K extends keyof GameSettings>(key: K, value: GameSettings[K]) => {
+export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
+  const updateSetting = <K extends keyof GameSettings>(
+    key: K,
+    value: GameSettings[K],
+  ) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
-  const primaryRed = "#e74c3c";   // Brighter red for play button and add icon
+  const primaryRed = "#e74c3c"; // Brighter red for play button and add icon
 
   return (
     <View style={styles.container}>
@@ -37,13 +36,21 @@ export function GameSetup({
               key={num}
               style={[
                 styles.groupChip,
-                settings.groupCount === num 
-                  ? { borderColor: primaryRed, backgroundColor: "rgba(211, 84, 0, 0.15)" }
-                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" }
+                settings.groupCount === num
+                  ? {
+                      borderColor: primaryRed,
+                      backgroundColor: "rgba(211, 84, 0, 0.15)",
+                    }
+                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" },
               ]}
               onPress={() => updateSetting("groupCount", num)}
             >
-              <ThemedText style={[styles.chipText, settings.groupCount === num && { color: "#fff" }]}>
+              <ThemedText
+                style={[
+                  styles.chipText,
+                  settings.groupCount === num && { color: "#fff" },
+                ]}
+              >
                 {num}
               </ThemedText>
             </TouchableOpacity>
@@ -69,12 +76,20 @@ export function GameSetup({
               style={[
                 styles.timerChip,
                 settings.roundTimer === time.val
-                  ? { borderColor: primaryRed, backgroundColor: "rgba(211, 84, 0, 0.15)" }
-                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" }
+                  ? {
+                      borderColor: primaryRed,
+                      backgroundColor: "rgba(211, 84, 0, 0.15)",
+                    }
+                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" },
               ]}
               onPress={() => updateSetting("roundTimer", time.val)}
             >
-              <ThemedText style={[styles.chipText, settings.roundTimer === time.val && { color: "#fff" }]}>
+              <ThemedText
+                style={[
+                  styles.chipText,
+                  settings.roundTimer === time.val && { color: "#fff" },
+                ]}
+              >
                 {time.label}
               </ThemedText>
             </TouchableOpacity>
@@ -86,7 +101,9 @@ export function GameSetup({
       <View style={styles.settingContainer}>
         <View style={styles.labelRow}>
           <Ionicons name="globe-outline" size={18} color={primaryRed} />
-          <ThemedText style={styles.sectionLabel}>LANGUAGE SELECTION</ThemedText>
+          <ThemedText style={styles.sectionLabel}>
+            LANGUAGE SELECTION
+          </ThemedText>
         </View>
         <View style={styles.chipRow}>
           {[
@@ -98,14 +115,22 @@ export function GameSetup({
               style={[
                 styles.langChip,
                 settings.language === lang.id
-                  ? { borderColor: primaryRed, backgroundColor: "rgba(211, 84, 0, 0.15)" }
-                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" }
+                  ? {
+                      borderColor: primaryRed,
+                      backgroundColor: "rgba(211, 84, 0, 0.15)",
+                    }
+                  : { backgroundColor: "rgba(255, 255, 255, 0.05)" },
               ]}
               onPress={() => updateSetting("language", lang.id)}
             >
               <View style={styles.langInner}>
                 <ThemedText style={styles.flagText}>{lang.flag}</ThemedText>
-                <ThemedText style={[styles.chipText, settings.language === lang.id && { color: "#fff" }]}>
+                <ThemedText
+                  style={[
+                    styles.chipText,
+                    settings.language === lang.id && { color: "#fff" },
+                  ]}
+                >
                   {lang.label}
                 </ThemedText>
               </View>
@@ -123,18 +148,71 @@ export function GameSetup({
         <View style={styles.stepperPill}>
           <TouchableOpacity
             style={styles.stepperBtn}
-            onPress={() => updateSetting("targetPoints", Math.max(50, settings.targetPoints - 10))}
+            onPress={() =>
+              updateSetting(
+                "targetPoints",
+                Math.max(50, settings.targetPoints - 10),
+              )
+            }
           >
             <Ionicons name="remove" size={24} color="#FFF" />
           </TouchableOpacity>
-          <ThemedText style={styles.pointsText}>{settings.targetPoints}</ThemedText>
+          <ThemedText style={styles.pointsText}>
+            {settings.targetPoints}
+          </ThemedText>
           <TouchableOpacity
-            style={[styles.stepperBtn, { backgroundColor: "rgba(231, 76, 60, 0.1)" }]}
-            onPress={() => updateSetting("targetPoints", Math.min(150, settings.targetPoints + 10))}
+            style={[
+              styles.stepperBtn,
+              { backgroundColor: "rgba(231, 76, 60, 0.1)" },
+            ]}
+            onPress={() =>
+              updateSetting(
+                "targetPoints",
+                Math.min(150, settings.targetPoints + 10),
+              )
+            }
           >
             <Ionicons name="add" size={24} color={primaryRed} />
           </TouchableOpacity>
         </View>
+      </View>
+
+      {/* Last Word for All Toggle */}
+      <View style={styles.settingContainer}>
+        <View style={styles.labelRow}>
+          <Ionicons name="flash-outline" size={18} color={primaryRed} />
+          <ThemedText style={styles.sectionLabel}>LAST WORD FOR ALL</ThemedText>
+        </View>
+        <TouchableOpacity
+          style={[
+            styles.togglePill,
+            settings.lastWordForAll
+              ? {
+                  backgroundColor: "rgba(231, 76, 60, 0.15)",
+                  borderColor: primaryRed,
+                }
+              : { backgroundColor: "rgba(255, 255, 255, 0.05)" },
+          ]}
+          onPress={() =>
+            updateSetting("lastWordForAll", !settings.lastWordForAll)
+          }
+        >
+          <ThemedText
+            style={[
+              styles.chipText,
+              settings.lastWordForAll && { color: "#fff" },
+            ]}
+          >
+            {settings.lastWordForAll ? "ACTIVE" : "INACTIVE"}
+          </ThemedText>
+          <Ionicons
+            name={
+              settings.lastWordForAll ? "checkmark-circle" : "ellipse-outline"
+            }
+            size={24}
+            color={settings.lastWordForAll ? primaryRed : "#6b829e"}
+          />
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity
@@ -259,5 +337,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "900",
     letterSpacing: 2,
+  },
+  togglePill: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    borderRadius: 18,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    width: "100%",
+    borderWidth: 2,
+    borderColor: "transparent",
   },
 });

@@ -33,6 +33,8 @@ export default function HomeScreen() {
     proceedToNextGroup,
     returnToSetup,
     updateGroupScore,
+    lastWordWinner,
+    assignLastWordPoint,
   } = useGameLoop();
 
   const navigation = useNavigation() as any;
@@ -82,6 +84,8 @@ export default function HomeScreen() {
             onStartTurn: startTurn,
             onProceedToNextGroup: proceedToNextGroup,
             onReturnToSetup: returnToSetup,
+            lastWordWinner,
+            assignLastWordPoint,
           }}
         >
           <TurnProvider
@@ -90,6 +94,7 @@ export default function HomeScreen() {
             onTurnEnd={endTurn}
             onWordSwipe={handleWordSwipe}
             onToggleSwipe={updateGroupScore}
+            lastWordForAll={settings.lastWordForAll}
           >
             <GameTurn />
           </TurnProvider>

@@ -20,6 +20,8 @@ export interface GameContextType {
   onStartTurn: () => void;
   onProceedToNextGroup: () => void;
   onReturnToSetup: () => void;
+  lastWordWinner: number | null;
+  assignLastWordPoint: (groupIndex: number | null) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -42,6 +44,10 @@ export interface TurnContextType {
   panResponderHandlers: any;
   undoSwipe: () => void;
   toggleSwipe: (index: number) => void;
+  isLastWordMode: boolean;
+  onTurnEnd: () => void;
+  showWinnerModal: boolean;
+  setShowWinnerModal: (show: boolean) => void;
 }
 
 export const TurnContext = createContext<TurnContextType | undefined>(undefined);
@@ -59,6 +65,7 @@ interface TurnProviderProps {
   onTurnEnd: (score: number) => void;
   onWordSwipe: (dir: "left" | "right", isUndo?: boolean) => void;
   onToggleSwipe?: (diff: number) => void;
+  lastWordForAll: boolean;
 }
 
 export function TurnProvider({
@@ -68,26 +75,49 @@ export function TurnProvider({
   onTurnEnd,
   onWordSwipe,
   onToggleSwipe,
+  lastWordForAll,
 }: TurnProviderProps) {
   const [turnScore, setTurnScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(0);
+  const [isLastWordMode, setIsLastWordMode] = useState(false);
+  const [showWinnerModal, setShowWinnerModal] = useState(false);
   const turnScoreRef = useRef(0);
   const [swipeHistory, setSwipeHistory] = useState<("left" | "right")[]>([]);
 
   const pan = useRef(new Animated.ValueXY()).current;
 
   const handleSwipe = (direction: "left" | "right") => {
+    onWordSwipe(direction, false);
+    
+    setSwipeHistory((prev) => [...prev, direction]);
+    
     if (direction === "right") {
-      setTurnScore((s) => s + 1);
-      turnScoreRef.current += 1;
+      // In Last Word Mode, success doesn't add a point to the turn score.
+      // The point is awarded manually to the winning team at turn end.
+      if (!isLastWordMode) {
+        setTurnScore((s) => s + 1);
+        turnScoreRef.current += 1;
+      }
     } else {
+      // Skip always subtracts a point
       setTurnScore((s) => s - 1);
       turnScoreRef.current -= 1;
     }
-    setSwipeHistory((prev) => [...prev, direction]);
+
+    if (isLastWordMode) {
+      if (direction === "right") {
+        setShowWinnerModal(true);
+      } else {
+        // Skip in last word mode ends turn immediately but with loss of point (handled above)
+        setTimeout(() => onTurnEnd(turnScoreRef.current), 50);
+      }
+    }
+    
     pan.setValue({ x: 0, y: 0 });
-    onWordSwipe(direction, false);
   };
+
+  const handleSwipeRef = useRef(handleSwipe);
+  handleSwipeRef.current = handleSwipe;
 
   const panResponderHandlers = useRef(
     PanResponder.create({
@@ -96,20 +126,25 @@ export function TurnProvider({
         useNativeDriver: false,
       }),
       onPanResponderRelease: (e, gestureState) => {
-        if (gestureState.dx > 100) handleSwipe("right");
-        else if (gestureState.dx < -100) handleSwipe("left");
+        if (gestureState.dx > 100) handleSwipeRef.current("right");
+        else if (gestureState.dx < -100) handleSwipeRef.current("left");
         else Animated.spring(pan, { toValue: { x: 0, y: 0 }, useNativeDriver: false }).start();
       },
     }),
   ).current.panHandlers;
 
   useEffect(() => {
-    if (gameState === GameState.Playing) {
-      setTurnScore(0);
-      turnScoreRef.current = 0;
-      setTimeLeft(roundTimer);
-      setSwipeHistory([]);
-      pan.setValue({ x: 0, y: 0 });
+    if (gameState === GameState.Ready || gameState === GameState.Playing) {
+      // Re-initialize for BOTH Ready and Playing to ensure clean state before GamePlaying mounts
+      if (gameState === GameState.Ready) {
+        setTurnScore(0);
+        turnScoreRef.current = 0;
+        setTimeLeft(roundTimer);
+        setSwipeHistory([]);
+        pan.setValue({ x: 0, y: 0 });
+        setIsLastWordMode(false);
+        setShowWinnerModal(false);
+      }
     }
   }, [gameState, roundTimer, pan]);
 
@@ -119,15 +154,20 @@ export function TurnProvider({
       timer = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
-            setTimeout(() => onTurnEnd(turnScoreRef.current), 0);
-            return 0;
+            if (lastWordForAll) {
+              setIsLastWordMode(true);
+              return 0;
+            } else {
+              setTimeout(() => onTurnEnd(turnScoreRef.current), 0);
+              return 0;
+            }
           }
           return prev - 1;
         });
       }, 1000);
     }
     return () => clearInterval(timer);
-  }, [gameState, timeLeft, onTurnEnd]);
+  }, [gameState, timeLeft, onTurnEnd, lastWordForAll]);
 
   const undoSwipe = () => {
     if (swipeHistory.length === 0) return;
@@ -170,6 +210,10 @@ export function TurnProvider({
         panResponderHandlers,
         undoSwipe,
         toggleSwipe,
+        isLastWordMode,
+        onTurnEnd: () => onTurnEnd(turnScoreRef.current),
+        showWinnerModal,
+        setShowWinnerModal,
       }}
     >
       {children}

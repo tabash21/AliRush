@@ -16,4 +16,5 @@ export interface GameSettings {
   language: Language;
   roundTimer: number;
   targetPoints: number;
+  lastWordForAll: boolean;
 }
