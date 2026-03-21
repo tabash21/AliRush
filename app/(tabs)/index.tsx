@@ -2,13 +2,13 @@ import ParallaxScrollView from "@/components/common/parallax-scroll-view";
 import { ThemedView } from "@/components/common/themed-view";
 import { GameSetup } from "@/components/game/GameSetup";
 import { GameTurn } from "@/components/game/GameTurn";
-import { GameProvider, useGameContext } from "@/context/GameContext";
+import { useGameContext } from "@/context/GameContext";
 import { TurnProvider } from "@/context/TurnContext";
 import { GameState } from "@/types/game";
 import { Image } from "expo-image";
 import { useNavigation } from "expo-router";
 import { useEffect } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 function GameContent() {
   const {
@@ -19,6 +19,7 @@ function GameContent() {
     setSettings,
     chipBorderColor,
     chipBgActive,
+    setIsQuitModalVisible,
     isDark,
   } = useGameContext();
 
@@ -28,22 +29,11 @@ function GameContent() {
     const unsubscribe = navigation.addListener("tabPress", (e: any) => {
       if (gameState !== GameState.Setup) {
         e.preventDefault();
-        Alert.alert(
-          "Quit Game?",
-          "Are you sure you want to quit the current game? All progress will be lost.",
-          [
-            { text: "Cancel", style: "cancel" },
-            {
-              text: "Quit",
-              style: "destructive",
-              onPress: () => onReturnToSetup(),
-            },
-          ],
-        );
+        setIsQuitModalVisible(true);
       }
     });
     return unsubscribe;
-  }, [navigation, gameState, onReturnToSetup]);
+  }, [navigation, gameState, setIsQuitModalVisible]);
 
   if (gameState !== GameState.Setup) {
     return (
@@ -77,11 +67,7 @@ function GameContent() {
 }
 
 export default function HomeScreen() {
-  return (
-    <GameProvider>
-      <GameContent />
-    </GameProvider>
-  );
+  return <GameContent />;
 }
 
 const styles = StyleSheet.create({

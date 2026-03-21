@@ -1,10 +1,27 @@
 import ParallaxScrollView from "@/components/common/parallax-scroll-view";
 import { ThemedText } from "@/components/common/themed-text";
+import { useGameContext } from "@/context/GameContext";
+import { GameState } from "@/types/game";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { useNavigation } from "expo-router";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function HowToPlayScreen() {
+  const { gameState, setIsQuitModalVisible } = useGameContext();
+  const navigation = useNavigation() as any;
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("tabPress", (e: any) => {
+      if (gameState !== GameState.Setup) {
+        e.preventDefault();
+        setIsQuitModalVisible(true);
+      }
+    });
+    return unsubscribe;
+  }, [navigation, gameState, setIsQuitModalVisible]);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}

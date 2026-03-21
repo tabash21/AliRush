@@ -7,8 +7,7 @@ export const GameContext = createContext<GameContextType | undefined>(undefined)
 
 export function useGameContext() {
   const context = useContext(GameContext);
-  if (!context)
-    throw new Error("useGameContext must be used within GameContext.Provider");
+  if (!context) throw new Error("useGameContext must be used within GameContext.Provider");
   return context;
 }
 
@@ -35,6 +34,7 @@ export function GameProvider({ children }: GameProviderProps) {
   const [groupScores, setGroupScores] = useState<number[]>([]);
   const [currentGroup, setCurrentGroup] = useState(0);
   const [lastWordWinner, setLastWordWinner] = useState<number | null>(null);
+  const [isQuitModalVisible, setIsQuitModalVisible] = useState(false);
 
   const [currentWords, setCurrentWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -88,6 +88,7 @@ export function GameProvider({ children }: GameProviderProps) {
 
   const returnToSetup = () => {
     setGameState(GameState.Setup);
+    setIsQuitModalVisible(false);
   };
 
   const assignLastWordPoint = (groupIndex: number | null) => {
@@ -110,9 +111,7 @@ export function GameProvider({ children }: GameProviderProps) {
   };
 
   const currentWord =
-    currentWordIndex < currentWords.length
-      ? currentWords[currentWordIndex]
-      : "No more words!";
+    currentWordIndex < currentWords.length ? currentWords[currentWordIndex] : "No more words!";
 
   const value: GameContextType = {
     settings,
@@ -135,11 +134,9 @@ export function GameProvider({ children }: GameProviderProps) {
     lastWordWinner,
     assignLastWordPoint,
     onStartGame: startGame,
+    isQuitModalVisible,
+    setIsQuitModalVisible,
   };
 
-  return (
-    <GameContext.Provider value={value}>
-      {children}
-    </GameContext.Provider>
-  );
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 }

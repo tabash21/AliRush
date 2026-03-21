@@ -21,4 +21,6 @@ export interface GameContextType {
   onReturnToSetup: () => void;
   lastWordWinner: number | null;
   assignLastWordPoint: (groupIndex: number | null) => void;
+  isQuitModalVisible: boolean;
+  setIsQuitModalVisible: (visible: boolean) => void;
 }
