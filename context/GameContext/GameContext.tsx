@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { useColorScheme } from "react-native";
 import { GameSettings, GameState, Language } from "../../types/game";
 import { GameContextType } from "./types";
 
@@ -16,12 +15,6 @@ interface GameProviderProps {
 }
 
 export function GameProvider({ children }: GameProviderProps) {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark";
-  const primaryRed = "#e74c3c";
-  const chipBorderColor = isDark ? "#444" : "#ccc";
-  const chipBgActive = primaryRed;
-
   const [settings, setSettings] = useState<GameSettings>({
     groupCount: 2,
     language: Language.English,
@@ -122,9 +115,6 @@ export function GameProvider({ children }: GameProviderProps) {
     currentWord,
     currentWords,
     currentWordIndex,
-    isDark,
-    chipBorderColor,
-    chipBgActive,
     onStartTurn: startTurn,
     onEndTurn: endTurn,
     onWordSwipe: handleWordSwipe,

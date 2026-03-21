@@ -8,9 +8,6 @@ export interface GameContextType {
   currentWord: string;
   currentWords: string[];
   currentWordIndex: number;
-  isDark: boolean;
-  chipBorderColor: string;
-  chipBgActive: string;
   setSettings: (settings: GameSettings | ((prev: GameSettings) => GameSettings)) => void;
   onEndTurn: (finalScore: number) => void;
   onWordSwipe: (direction: "left" | "right", isUndo?: boolean) => void;

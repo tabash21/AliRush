@@ -8,20 +8,13 @@ import { GameState } from "@/types/game";
 import { Image } from "expo-image";
 import { useNavigation } from "expo-router";
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, useColorScheme } from "react-native";
 
 function GameContent() {
-  const {
-    settings,
-    gameState,
-    onStartGame,
-    onReturnToSetup,
-    setSettings,
-    chipBorderColor,
-    chipBgActive,
-    setIsQuitModalVisible,
-    isDark,
-  } = useGameContext();
+  const { settings, gameState, onStartGame, setSettings, setIsQuitModalVisible } = useGameContext();
+
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark";
 
   const navigation = useNavigation() as any;
 
@@ -54,14 +47,7 @@ function GameContent() {
         <Image source={require("@/assets/images/aliRush-logo.jpg")} style={styles.reactLogo} />
       }
     >
-      <GameSetup
-        settings={settings}
-        setSettings={setSettings}
-        onStartGame={onStartGame}
-        chipBorderColor={chipBorderColor}
-        chipBgActive={chipBgActive}
-        stepperBg={stepperBg}
-      />
+      <GameSetup settings={settings} setSettings={setSettings} onStartGame={onStartGame} />
     </ParallaxScrollView>
   );
 }

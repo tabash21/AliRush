@@ -1,15 +1,12 @@
 import { ThemedText } from "@/components/common/themed-text";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, useColorScheme, View } from "react-native";
 import { GameSettings, Language } from "../../types/game";
 
 interface SetupProps {
   settings: GameSettings;
   setSettings: React.Dispatch<React.SetStateAction<GameSettings>>;
   onStartGame: () => void;
-  chipBorderColor: string;
-  chipBgActive: string;
-  stepperBg: string;
 }
 
 export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
