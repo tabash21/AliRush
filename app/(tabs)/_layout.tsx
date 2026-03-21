@@ -21,8 +21,15 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="how-to-play"
+        options={{
+          title: "Rules",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <IconSymbol size={28} name="questionmark.circle.fill" color={color} />
           ),
         }}
       />

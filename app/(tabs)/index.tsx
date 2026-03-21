@@ -2,7 +2,7 @@ import ParallaxScrollView from "@/components/common/parallax-scroll-view";
 import { ThemedView } from "@/components/common/themed-view";
 import { GameSetup } from "@/components/game/GameSetup";
 import { GameTurn } from "@/components/game/GameTurn";
-import { GameContext, GameProvider, useGameContext } from "@/context/GameContext";
+import { GameProvider, useGameContext } from "@/context/GameContext";
 import { TurnProvider } from "@/context/TurnContext";
 import { GameState } from "@/types/game";
 import { Image } from "expo-image";
@@ -21,7 +21,7 @@ function GameContent() {
     chipBgActive,
     isDark,
   } = useGameContext();
-  
+
   const navigation = useNavigation() as any;
 
   useEffect(() => {
@@ -61,10 +61,7 @@ function GameContent() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
-        <Image
-          source={require("@/assets/images/aliRush-logo.jpg")}
-          style={styles.reactLogo}
-        />
+        <Image source={require("@/assets/images/aliRush-logo.jpg")} style={styles.reactLogo} />
       }
     >
       <GameSetup
