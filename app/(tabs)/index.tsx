@@ -10,7 +10,7 @@ import { useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
-function GameContent() {
+export default function HomeScreen() {
   const { settings, gameState, onStartGame, setSettings, setIsQuitModalVisible } = useGameContext();
 
   const navigation = useNavigation() as any;
@@ -45,10 +45,6 @@ function GameContent() {
       <GameSetup settings={settings} setSettings={setSettings} onStartGame={onStartGame} />
     </ParallaxScrollView>
   );
-}
-
-export default function HomeScreen() {
-  return <GameContent />;
 }
 
 const styles = StyleSheet.create({
