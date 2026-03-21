@@ -2,22 +2,13 @@ import { ThemedText } from "@/components/common/themed-text";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useAudioPlayer } from "expo-audio";
 import { useEffect, useRef } from "react";
-import {
-  Animated,
-  Modal,
-  StyleSheet,
-  TouchableOpacity,
-  useColorScheme,
-  Vibration,
-  View,
-} from "react-native";
+import { Animated, Modal, TouchableOpacity, useColorScheme, Vibration, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useGameContext } from "../../context/GameContext";
-import { useTurnContext } from "../../context/TurnContext";
-
-const TICK_SOUND = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg";
-const END_SOUND = "https://actions.google.com/sounds/v1/emergency/emergency_siren_short_burst.ogg";
+import { useGameContext } from "../../../context/GameContext";
+import { useTurnContext } from "../../../context/TurnContext";
+import { GAMEPLAYING_SOUNDS } from "./consts";
+import { styles } from "./style";
 
 export function GamePlaying() {
   const { settings, currentWord, assignLastWordPoint } = useGameContext();
@@ -34,8 +25,8 @@ export function GamePlaying() {
     setShowWinnerModal,
   } = useTurnContext();
 
-  const tickPlayer = useAudioPlayer(TICK_SOUND);
-  const endPlayer = useAudioPlayer(END_SOUND);
+  const tickPlayer = useAudioPlayer(GAMEPLAYING_SOUNDS.tick);
+  const endPlayer = useAudioPlayer(GAMEPLAYING_SOUNDS.end);
 
   const hintPulse = useRef(new Animated.Value(0.4)).current;
 
@@ -323,216 +314,3 @@ function ThemeTextContainer({ word }: { word: string }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  centerContent: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-  progressBarContainer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 4,
-    backgroundColor: "rgba(0,0,0,0.05)",
-    zIndex: 20,
-  },
-  progressBar: {
-    height: "100%",
-    borderTopRightRadius: 2,
-    borderBottomRightRadius: 2,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    position: "absolute",
-    paddingHorizontal: 30,
-    zIndex: 10,
-  },
-  headerBlock: {
-    alignItems: "flex-start",
-  },
-  headerLabel: {
-    fontSize: 12,
-    fontWeight: "800",
-    color: "#888",
-    letterSpacing: 1.5,
-    marginBottom: 4,
-  },
-  headerValRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  headerVal: {
-    fontSize: 26,
-    fontWeight: "900",
-  },
-  card: {
-    width: "75%",
-    aspectRatio: 3 / 4,
-    borderWidth: 4,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 20,
-    elevation: 8,
-  },
-  cardTextContainer: {
-    padding: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    width: "100%",
-  },
-  cardText: {
-    fontSize: 35,
-    fontWeight: "900",
-    textAlign: "center",
-    letterSpacing: 1,
-    height: 50,
-    width: "100%",
-  },
-  swipeHints: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    position: "absolute",
-    bottom: 80,
-    paddingHorizontal: 40,
-    zIndex: 10,
-  },
-  hintBox: {
-    alignItems: "center",
-  },
-  iconCircle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  hintSub: {
-    fontSize: 14,
-    fontWeight: "800",
-    letterSpacing: 0.5,
-  },
-  undoContainer: {
-    position: "absolute",
-    bottom: 10,
-    width: "100%",
-    alignItems: "center",
-  },
-  undoButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    backgroundColor: "rgba(100, 100, 100, 0.2)",
-    borderRadius: 20,
-  },
-  swipeHintText: {
-    fontSize: 14,
-    fontWeight: "800",
-    color: "#888",
-    letterSpacing: 1,
-    textTransform: "uppercase",
-  },
-  lastWordBackground: {
-    backgroundColor: "rgba(211, 47, 47, 0.1)",
-  },
-  lastWordBadge: {
-    position: "absolute",
-    top: -15,
-    backgroundColor: "#FFD700",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    borderRadius: 10,
-    zIndex: 30,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  lastWordBadgeText: {
-    color: "#000",
-    fontWeight: "900",
-    fontSize: 12,
-  },
-  lastWordInstructions: {
-    alignItems: "center",
-    gap: 4,
-  },
-  instructionText: {
-    fontSize: 20,
-    fontWeight: "900",
-    color: "#e74c3c",
-  },
-  instructionSubText: {
-    fontSize: 12,
-    color: "#888",
-    fontWeight: "600",
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.85)",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  modalContent: {
-    backgroundColor: "#1e1e24",
-    width: "90%",
-    borderRadius: 30,
-    padding: 30,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "rgba(255, 215, 0, 0.3)",
-  },
-  modalTitle: {
-    fontSize: 24,
-    fontWeight: "900",
-    color: "#fff",
-    marginBottom: 5,
-  },
-  modalSubTitle: {
-    fontSize: 16,
-    color: "#888",
-    marginBottom: 24,
-    fontWeight: "600",
-  },
-  winnerGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 12,
-    justifyContent: "center",
-    width: "100%",
-  },
-  winnerBtn: {
-    backgroundColor: "rgba(231, 76, 60, 0.15)",
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderRadius: 15,
-    minWidth: "45%",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "rgba(231, 76, 60, 0.3)",
-  },
-  winnerBtnText: {
-    fontWeight: "800",
-    color: "#e74c3c",
-  },
-  noWinnerBtn: {
-    marginTop: 20,
-    paddingVertical: 10,
-  },
-  noWinnerBtnText: {
-    color: "#888",
-    fontWeight: "700",
-    letterSpacing: 1,
-  },
-});
