@@ -8,46 +8,23 @@ export function GameReady() {
   const targetPoints = settings.targetPoints;
   return (
     <View style={styles.centerContent}>
-      <View style={styles.headerContainer}>
-        <ThemedText style={styles.teamTitle}>
-          TEAM {currentGroup + 1}
-        </ThemedText>
-        <ThemedText style={styles.mainTitle}>Get Ready!</ThemedText>
-      </View>
-
       <View style={styles.scoreboardCard}>
         <View style={styles.scoreboardHeader}>
           <ThemedText style={styles.scoreboardLabel}>SCOREBOARD</ThemedText>
-          <ThemedText style={styles.targetLabel}>
-            Target: {targetPoints}
-          </ThemedText>
         </View>
 
         <ScrollView style={styles.scoreboardContent} nestedScrollEnabled={true}>
           {groupScores.map((score, index) => {
             const isActive = index === currentGroup;
-            const progressPercentage = Math.min(
-              (score / targetPoints) * 100,
-              100,
-            );
+            const progressPercentage = Math.min((score / targetPoints) * 100, 100);
 
             return (
               <View key={index} style={styles.teamRow}>
                 <View style={styles.teamRowHeader}>
-                  <ThemedText
-                    style={[
-                      styles.teamNameText,
-                      isActive && styles.activeTeamText,
-                    ]}
-                  >
+                  <ThemedText style={[styles.teamNameText, isActive && styles.activeTeamText]}>
                     Team {index + 1}
                   </ThemedText>
-                  <ThemedText
-                    style={[
-                      styles.teamScoreText,
-                      isActive && styles.activeScoreText,
-                    ]}
-                  >
+                  <ThemedText style={[styles.teamScoreText, isActive && styles.activeScoreText]}>
                     {score}/{targetPoints}
                   </ThemedText>
                 </View>
@@ -66,6 +43,11 @@ export function GameReady() {
         </ScrollView>
       </View>
 
+      <View style={styles.headerContainer}>
+        <ThemedText style={styles.teamTitle}>Team {currentGroup + 1}'s Turn</ThemedText>
+        <ThemedText style={styles.mainTitle}>Get Ready!</ThemedText>
+      </View>
+
       <View style={styles.middleActionContainer}>
         <View style={styles.pulseGlow}>
           <TouchableOpacity
@@ -74,36 +56,10 @@ export function GameReady() {
             activeOpacity={0.8}
           >
             <View style={styles.actionInnerCircle}>
-              <MaterialCommunityIcons
-                name="gesture-tap"
-                size={56}
-                color="#fff"
-              />
-              <ThemedText style={styles.actionButtonText}>
-                TAP TO START
-              </ThemedText>
+              <MaterialCommunityIcons name="gesture-tap" size={56} color="#fff" />
+              <ThemedText style={styles.actionButtonText}>TAP TO START</ThemedText>
             </View>
           </TouchableOpacity>
-        </View>
-      </View>
-
-      <View style={styles.howToPlayCard}>
-        <View style={styles.howToPlayIconBox}>
-          <MaterialCommunityIcons
-            name="lightbulb-outline"
-            size={24}
-            color="#e74c3c"
-          />
-        </View>
-        <View style={styles.howToPlayTextContainer}>
-          <ThemedText style={styles.howToPlayTitle}>HOW TO PLAY</ThemedText>
-          <ThemedText style={styles.howToPlayDescription}>
-            Explain the words to your teammates{" "}
-            <ThemedText style={styles.howToPlayHighlight}>
-              without saying the word itself
-            </ThemedText>{" "}
-            or any part of it!
-          </ThemedText>
         </View>
       </View>
     </View>
@@ -120,18 +76,17 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 40,
   },
   teamTitle: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: "900",
     color: "#e74c3c",
     letterSpacing: 2,
-    marginBottom: 4,
-    textTransform: "uppercase",
+    marginBottom: 10,
   },
   mainTitle: {
-    fontSize: 48,
+    fontSize: 45,
     fontWeight: "900",
     height: 40,
     textAlignVertical: "center",
@@ -143,13 +98,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#1e1e1e",
     borderRadius: 20,
     padding: 24,
-    marginTop: 20,
+    marginTop: 30,
     borderWidth: 1,
     borderColor: "#333",
   },
   scoreboardHeader: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
   },
@@ -157,7 +112,7 @@ const styles = StyleSheet.create({
     maxHeight: 125,
   },
   scoreboardLabel: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "800",
     color: "#6b829e",
     letterSpacing: 1,
@@ -213,16 +168,16 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   pulseGlow: {
-    width: 240,
-    height: 240,
+    width: 260,
+    height: 260,
     borderRadius: 140,
     backgroundColor: "rgba(231, 76, 60, 0.15)",
     justifyContent: "center",
     alignItems: "center",
   },
   actionCircleButton: {
-    width: 210,
-    height: 210,
+    width: 220,
+    height: 220,
     borderRadius: 110,
     backgroundColor: "#e74c3c",
     justifyContent: "center",
@@ -248,44 +203,5 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     marginTop: 10,
     letterSpacing: -1,
-  },
-  howToPlayCard: {
-    width: "90%",
-    backgroundColor: "#1e1e1e",
-    borderRadius: 20,
-    padding: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#333",
-  },
-  howToPlayIconBox: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
-    backgroundColor: "rgba(231, 76, 60, 0.15)",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 16,
-  },
-  howToPlayTextContainer: {
-    flex: 1,
-  },
-  howToPlayTitle: {
-    fontSize: 14,
-    fontWeight: "800",
-    color: "#ccc",
-    letterSpacing: 1,
-    marginBottom: 4,
-  },
-  howToPlayDescription: {
-    fontSize: 14,
-    color: "#aaa",
-    lineHeight: 20,
-  },
-  howToPlayHighlight: {
-    color: "#e74c3c",
-    fontWeight: "bold",
   },
 });
