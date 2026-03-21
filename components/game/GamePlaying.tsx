@@ -7,6 +7,7 @@ import {
   Modal,
   StyleSheet,
   TouchableOpacity,
+  useColorScheme,
   Vibration,
   View,
 } from "react-native";
@@ -16,17 +17,10 @@ import { useGameContext } from "../../context/GameContext";
 import { useTurnContext } from "../../context/TurnContext";
 
 const TICK_SOUND = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg";
-const END_SOUND =
-  "https://actions.google.com/sounds/v1/emergency/emergency_siren_short_burst.ogg";
+const END_SOUND = "https://actions.google.com/sounds/v1/emergency/emergency_siren_short_burst.ogg";
 
 export function GamePlaying() {
-  const {
-    settings,
-    currentWord,
-    isDark,
-    chipBorderColor,
-    assignLastWordPoint,
-  } = useGameContext();
+  const { settings, currentWord, assignLastWordPoint } = useGameContext();
   const {
     timeLeft,
     turnScore,
@@ -47,14 +41,14 @@ export function GamePlaying() {
 
   const roundTimer = settings.roundTimer;
   const canUndo = swipeHistory.length > 0;
+
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark";
+  const chipBorderColor = isDark ? "#444" : "#ccc";
   // Interpolate side swipe to create dynamic border colors indicating the action
   const dynamicBorderColor = pan.x.interpolate({
     inputRange: [-100, 0, 100],
-    outputRange: [
-      "rgba(231, 76, 60, 1)",
-      chipBorderColor,
-      "rgba(46, 204, 113, 1)",
-    ],
+    outputRange: ["rgba(231, 76, 60, 1)", chipBorderColor, "rgba(46, 204, 113, 1)"],
     extrapolate: "clamp",
   });
 
@@ -205,17 +199,8 @@ export function GamePlaying() {
             { opacity: leftHintOpacity, transform: [{ scale: leftHintScale }] },
           ]}
         >
-          <View
-            style={[
-              styles.iconCircle,
-              { backgroundColor: "rgba(231, 76, 60, 0.15)" },
-            ]}
-          >
-            <MaterialIcons
-              name="keyboard-double-arrow-left"
-              size={32}
-              color="#e74c3c"
-            />
+          <View style={[styles.iconCircle, { backgroundColor: "rgba(231, 76, 60, 0.15)" }]}>
+            <MaterialIcons name="keyboard-double-arrow-left" size={32} color="#e74c3c" />
           </View>
           <ThemedText
             style={{
@@ -229,9 +214,7 @@ export function GamePlaying() {
           </ThemedText>
         </Animated.View>
 
-        <View style={[styles.hintBox, { alignItems: "center" }]}>
-          {/* spacer */}
-        </View>
+        <View style={[styles.hintBox, { alignItems: "center" }]}>{/* spacer */}</View>
 
         <Animated.View
           style={[
@@ -242,17 +225,8 @@ export function GamePlaying() {
             },
           ]}
         >
-          <View
-            style={[
-              styles.iconCircle,
-              { backgroundColor: "rgba(46, 204, 113, 0.15)" },
-            ]}
-          >
-            <MaterialIcons
-              name="keyboard-double-arrow-right"
-              size={32}
-              color="#2ecc71"
-            />
+          <View style={[styles.iconCircle, { backgroundColor: "rgba(46, 204, 113, 0.15)" }]}>
+            <MaterialIcons name="keyboard-double-arrow-right" size={32} color="#2ecc71" />
           </View>
           <ThemedText
             style={{
@@ -270,12 +244,8 @@ export function GamePlaying() {
       <View style={styles.undoContainer}>
         {isLastWordMode ? (
           <View style={styles.lastWordInstructions}>
-            <ThemedText style={styles.instructionText}>
-              ALL TEAMS GUESS!
-            </ThemedText>
-            <ThemedText style={styles.instructionSubText}>
-              Swipe when someone wins
-            </ThemedText>
+            <ThemedText style={styles.instructionText}>ALL TEAMS GUESS!</ThemedText>
+            <ThemedText style={styles.instructionSubText}>Swipe when someone wins</ThemedText>
           </View>
         ) : canUndo ? (
           <TouchableOpacity onPress={undoSwipe} style={styles.undoButton}>
@@ -283,9 +253,7 @@ export function GamePlaying() {
           </TouchableOpacity>
         ) : (
           <Animated.View style={{ opacity: hintPulse }}>
-            <ThemedText style={styles.swipeHintText}>
-              {"« Swipe Left or Right »"}
-            </ThemedText>
+            <ThemedText style={styles.swipeHintText}>{"« Swipe Left or Right »"}</ThemedText>
           </Animated.View>
         )}
       </View>
@@ -305,9 +273,7 @@ export function GamePlaying() {
               style={{ marginBottom: 10 }}
             />
             <ThemedText style={styles.modalTitle}>Last Word Winner!</ThemedText>
-            <ThemedText style={styles.modalSubTitle}>
-              Who guessed it correctly?
-            </ThemedText>
+            <ThemedText style={styles.modalSubTitle}>Who guessed it correctly?</ThemedText>
 
             <View style={styles.winnerGrid}>
               {Array.from({ length: settings.groupCount }).map((_, i) => (
@@ -320,9 +286,7 @@ export function GamePlaying() {
                   }}
                   style={styles.winnerBtn}
                 >
-                  <ThemedText style={styles.winnerBtnText}>
-                    TEAM {i + 1}
-                  </ThemedText>
+                  <ThemedText style={styles.winnerBtnText}>TEAM {i + 1}</ThemedText>
                 </TouchableOpacity>
               ))}
             </View>

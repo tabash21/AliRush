@@ -8,13 +8,10 @@ import { GameState } from "@/types/game";
 import { Image } from "expo-image";
 import { useNavigation } from "expo-router";
 import { useEffect } from "react";
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet } from "react-native";
 
 function GameContent() {
   const { settings, gameState, onStartGame, setSettings, setIsQuitModalVisible } = useGameContext();
-
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark";
 
   const navigation = useNavigation() as any;
 
@@ -37,8 +34,6 @@ function GameContent() {
       </ThemedView>
     );
   }
-
-  const stepperBg = isDark ? "#333" : "#e0e0e0";
 
   return (
     <ParallaxScrollView

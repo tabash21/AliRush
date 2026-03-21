@@ -1,8 +1,8 @@
-import { createContext, useContext, useEffect, useRef, useState, ReactNode } from "react";
+import { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { Animated, PanResponder } from "react-native";
 import { GameState } from "../../types/game";
-import { TurnContextType } from "./types";
 import { useGameContext } from "../GameContext";
+import { TurnContextType } from "./types";
 
 export const TurnContext = createContext<TurnContextType | undefined>(undefined);
 
@@ -11,13 +11,7 @@ export interface TurnProviderProps {
 }
 
 export function TurnProvider({ children }: TurnProviderProps) {
-  const {
-    gameState,
-    settings,
-    onEndTurn,
-    onWordSwipe,
-    onUpdateGroupScore,
-  } = useGameContext();
+  const { gameState, settings, onEndTurn, onWordSwipe, onUpdateGroupScore } = useGameContext();
 
   const { roundTimer, lastWordForAll } = settings;
   const [turnScore, setTurnScore] = useState(0);
@@ -31,9 +25,9 @@ export function TurnProvider({ children }: TurnProviderProps) {
 
   const handleSwipe = (direction: "left" | "right") => {
     onWordSwipe(direction, false);
-    
+
     setSwipeHistory((prev) => [...prev, direction]);
-    
+
     if (direction === "right") {
       if (!isLastWordMode) {
         setTurnScore((s) => s + 1);
@@ -51,7 +45,7 @@ export function TurnProvider({ children }: TurnProviderProps) {
         setTimeout(() => onEndTurn(turnScoreRef.current), 50);
       }
     }
-    
+
     pan.setValue({ x: 0, y: 0 });
   };
 
