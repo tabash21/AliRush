@@ -1,23 +1,15 @@
 import { ThemedText } from "@/components/common/themed-text";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Modal, TouchableOpacity, View } from "react-native";
+import { useGameContext } from "@/context/GameContext";
+import { useTurnContext } from "@/context/TurnContext";
 import { styles } from "./style";
 
-interface WinnerModalProps {
-  showWinnerModal: boolean;
-  setShowWinnerModal: (show: boolean) => void;
-  groupCount: number;
-  assignLastWordPoint: (index: number | null) => void;
-  onTurnEnd: () => void;
-}
+export function WinnerModal() {
+  const { settings, assignLastWordPoint } = useGameContext();
+  const { showWinnerModal, setShowWinnerModal, onTurnEnd } = useTurnContext();
 
-export function WinnerModal({
-  showWinnerModal,
-  setShowWinnerModal,
-  groupCount,
-  assignLastWordPoint,
-  onTurnEnd,
-}: WinnerModalProps) {
+  const groupCount = settings.groupCount;
   return (
     <Modal
       visible={showWinnerModal}
@@ -27,7 +19,12 @@ export function WinnerModal({
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <MaterialIcons name="emoji-events" size={48} color="#FFD700" style={{ marginBottom: 10 }} />
+          <MaterialIcons
+            name="emoji-events"
+            size={48}
+            color="#FFD700"
+            style={{ marginBottom: 10 }}
+          />
           <ThemedText style={styles.modalTitle}>Last Word Winner!</ThemedText>
           <ThemedText style={styles.modalSubTitle}>Who guessed it correctly?</ThemedText>
 

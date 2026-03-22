@@ -1,15 +1,16 @@
 import { ThemedText } from "@/components/common/themed-text";
 import { MaterialIcons } from "@expo/vector-icons";
 import { View } from "react-native";
+import { useTurnContext } from "@/context/TurnContext";
 import { styles } from "./style";
 
 interface GameHeaderProps {
-  timeLeft: number;
-  turnScore: number;
   topInset: number;
 }
 
-export function GameHeader({ timeLeft, turnScore, topInset }: GameHeaderProps) {
+export function GameHeader({ topInset }: GameHeaderProps) {
+  const { timeLeft, turnScore } = useTurnContext();
+
   return (
     <View style={[styles.container, { top: topInset + 20 }]}>
       <View style={styles.headerBlock}>

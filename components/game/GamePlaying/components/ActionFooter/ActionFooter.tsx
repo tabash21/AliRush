@@ -1,20 +1,35 @@
-import { ThemedText } from "@/components/common/themed-text";
+import { useEffect, useRef } from "react";
 import { Animated, TouchableOpacity, View } from "react-native";
+
+import { ThemedText } from "@/components/common/themed-text";
+import { useTurnContext } from "../../../../../context/TurnContext";
 import { styles } from "./style";
 
-interface ActionFooterProps {
-  isLastWordMode: boolean;
-  canUndo: boolean;
-  undoSwipe: () => void;
-  hintPulse: Animated.Value;
-}
+export function ActionFooter() {
+  const { isLastWordMode, undoSwipe, swipeHistory } = useTurnContext();
+  const hintPulse = useRef(new Animated.Value(0.4)).current;
 
-export function ActionFooter({
-  isLastWordMode,
-  canUndo,
-  undoSwipe,
-  hintPulse,
-}: ActionFooterProps) {
+  const canUndo = swipeHistory.length > 0;
+
+  useEffect(() => {
+    if (!canUndo) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(hintPulse, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+          Animated.timing(hintPulse, {
+            toValue: 0.4,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+        ]),
+      ).start();
+    }
+  }, [canUndo]);
+
   return (
     <View style={styles.container}>
       {isLastWordMode ? (
