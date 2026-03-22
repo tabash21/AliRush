@@ -6,24 +6,10 @@ import { useGameContext } from "@/context/GameContext";
 import { TurnProvider } from "@/context/TurnContext";
 import { GameState } from "@/types/game";
 import { Image } from "expo-image";
-import { useNavigation } from "expo-router";
-import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
 export default function HomeScreen() {
-  const { settings, gameState, onStartGame, setSettings, setIsQuitModalVisible } = useGameContext();
-
-  const navigation = useNavigation() as any;
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("tabPress", (e: any) => {
-      if (gameState !== GameState.Setup) {
-        e.preventDefault();
-        setIsQuitModalVisible(true);
-      }
-    });
-    return unsubscribe;
-  }, [navigation, gameState, setIsQuitModalVisible]);
+  const { settings, gameState, onStartGame, setSettings } = useGameContext();
 
   if (gameState !== GameState.Setup) {
     return (
