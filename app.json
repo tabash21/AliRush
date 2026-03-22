@@ -18,7 +18,7 @@
         "monochromeImage": "./assets/images/wordRush-squre.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.tal_ben_shushan.wordRush"
+      "package": "com.tabash21.wordrush"
     },
     "web": {
       "output": "static",
@@ -45,10 +45,7 @@
       "reactCompiler": true
     },
     "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "e01e4277-7e83-4a95-8cc1-3bf1901f935b"
-      }
+      "router": {}
     }
   }
 }
