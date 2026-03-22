@@ -1,9 +1,7 @@
 import ParallaxScrollView from "@/components/common/parallax-scroll-view";
-import { ThemedView } from "@/components/common/themed-view";
+import { Game } from "@/components/game/Game";
 import { GameSetup } from "@/components/game/GameSetup";
-import { GameTurn } from "@/components/game/GameTurn";
 import { useGameContext } from "@/context/GameContext";
-import { TurnProvider } from "@/context/TurnContext";
 import { GameState } from "@/types/game";
 import { Image } from "expo-image";
 import { StyleSheet } from "react-native";
@@ -12,13 +10,7 @@ export default function HomeScreen() {
   const { settings, gameState, onStartGame, setSettings } = useGameContext();
 
   if (gameState !== GameState.Setup) {
-    return (
-      <ThemedView style={styles.gameContainer}>
-        <TurnProvider>
-          <GameTurn />
-        </TurnProvider>
-      </ThemedView>
-    );
+    return <Game />;
   }
 
   return (
@@ -40,9 +32,5 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: "absolute",
-  },
-  gameContainer: {
-    flex: 1,
-    justifyContent: "center",
   },
 });

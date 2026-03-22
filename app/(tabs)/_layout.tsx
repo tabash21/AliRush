@@ -3,7 +3,7 @@ import React from "react";
 
 import { HapticTab } from "@/components/common/haptic-tab";
 import { IconSymbol } from "@/components/common/icon-symbol";
-import { QuitGameModal } from "@/components/common/QuitGameModal";
+import { QuitGameModal } from "@/components/QuitGameModal/QuitGameModal";
 import { Colors } from "@/constants/theme";
 import { GameProvider, useGameContext } from "@/context/GameContext";
 import { useColorScheme } from "@/hooks/use-color-scheme";
