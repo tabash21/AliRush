@@ -4,7 +4,7 @@
     "slug": "AliRush",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/app-logo.png",
+    "icon": "./assets/images/aliRush-squre.png",
     "scheme": "alirush",
     "userInterfaceStyle": "automatic",
     "ios": {
@@ -13,23 +13,23 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/app-logo.png",
-        "backgroundImage": "./assets/images/app-logo.png",
-        "monochromeImage": "./assets/images/app-logo.png"
+        "foregroundImage": "./assets/images/aliRush-squre.png",
+        "backgroundImage": "./assets/images/aliRush-squre.png",
+        "monochromeImage": "./assets/images/aliRush-squre.png"
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.tal_ben_shushan.aliRush"
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/app-logo.png"
+      "favicon": "./assets/images/aliRush-squre.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/aliRush-round-logo.jpg",
+          "image": "./assets/images/aliRush-squre.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
