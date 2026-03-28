@@ -4,7 +4,7 @@
     "slug": "WordRush",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/wordRush-squre.png",
+    "icon": "./assets/images/wordRush-icon.png",
     "scheme": "wordrush",
     "userInterfaceStyle": "automatic",
     "ios": {
