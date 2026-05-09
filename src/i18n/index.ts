@@ -11,6 +11,8 @@ import enReady from "./locales/en/ready.json";
 import enOver from "./locales/en/over.json";
 import enModals from "./locales/en/modals.json";
 import enWinner from "./locales/en/winner.json";
+import enPlaying from "./locales/en/playing.json";
+import enRules from "./locales/en/rules.json";
 
 import heCommon from "./locales/he/common.json";
 import heSetup from "./locales/he/setup.json";
@@ -18,6 +20,8 @@ import heReady from "./locales/he/ready.json";
 import heOver from "./locales/he/over.json";
 import heModals from "./locales/he/modals.json";
 import heWinner from "./locales/he/winner.json";
+import hePlaying from "./locales/he/playing.json";
+import heRules from "./locales/he/rules.json";
 
 const LANGUAGE_KEY = "user-language";
 
@@ -30,6 +34,8 @@ const resources = {
       over: enOver,
       modals: enModals,
       winner: enWinner,
+      playing: enPlaying,
+      rules: enRules,
     },
   },
   he: {
@@ -40,6 +46,8 @@ const resources = {
       over: heOver,
       modals: heModals,
       winner: heWinner,
+      playing: hePlaying,
+      rules: heRules,
     },
   },
 };

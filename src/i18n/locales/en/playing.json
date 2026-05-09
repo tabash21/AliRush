@@ -1,0 +1,19 @@
+{
+  "time_left": "TIME LEFT",
+  "points": "POINTS",
+  "skip": "SKIP",
+  "success": "SUCCESS",
+  "last_word_winner": "Last Word Winner!",
+  "who_guessed": "Who guessed it correctly?",
+  "team": "TEAM {{number}}",
+  "no_one": "NO ONE",
+  "last_word": "LAST WORD!",
+  "round_over": "Round Over!",
+  "points_earned": "POINTS EARNED",
+  "last_word_winner_title": "Last Word Winner",
+  "team_earned_point": "TEAM {{number}} EARNED THE POINT!",
+  "no_team_guessed": "NO TEAM GUESSED CORRECTLY",
+  "guessed_correctly": "Guessed Correctly ({{count}})",
+  "failed_words": "Failed Words ({{count}})",
+  "next_team_turn": "NEXT TEAM'S TURN"
+}

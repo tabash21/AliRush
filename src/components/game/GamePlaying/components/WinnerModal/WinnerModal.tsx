@@ -4,10 +4,12 @@ import { Modal, TouchableOpacity, View } from "react-native";
 import { useGameContext } from "@/context/GameContext";
 import { useTurnContext } from "@/context/TurnContext";
 import { styles } from "./style";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 export function WinnerModal() {
   const { settings, assignLastWordPoint } = useGameContext();
   const { showWinnerModal, setShowWinnerModal, onTurnEnd } = useTurnContext();
+  const { t } = useAppTranslation();
 
   const groupCount = settings.groupCount;
   return (
@@ -25,8 +27,8 @@ export function WinnerModal() {
             color="#FFD700"
             style={{ marginBottom: 10 }}
           />
-          <ThemedText style={styles.modalTitle}>Last Word Winner!</ThemedText>
-          <ThemedText style={styles.modalSubTitle}>Who guessed it correctly?</ThemedText>
+          <ThemedText style={styles.modalTitle}>{t("playing.last_word_winner")}</ThemedText>
+          <ThemedText style={styles.modalSubTitle}>{t("playing.who_guessed")}</ThemedText>
 
           <View style={styles.winnerGrid}>
             {Array.from({ length: groupCount }).map((_, i) => (
@@ -39,7 +41,7 @@ export function WinnerModal() {
                 }}
                 style={styles.winnerBtn}
               >
-                <ThemedText style={styles.winnerBtnText}>TEAM {i + 1}</ThemedText>
+                <ThemedText style={styles.winnerBtnText}>{t("playing.team", { number: i + 1 })}</ThemedText>
               </TouchableOpacity>
             ))}
           </View>
@@ -52,7 +54,7 @@ export function WinnerModal() {
             }}
             style={styles.noWinnerBtn}
           >
-            <ThemedText style={styles.noWinnerBtnText}>NO ONE</ThemedText>
+            <ThemedText style={styles.noWinnerBtnText}>{t("playing.no_one")}</ThemedText>
           </TouchableOpacity>
         </View>
       </View>

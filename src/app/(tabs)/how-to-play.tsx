@@ -3,8 +3,12 @@ import { ThemedText } from "@/components/common/themed-text";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { StyleSheet, View } from "react-native";
+import { Trans } from "react-i18next";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 export default function HowToPlayScreen() {
+  const { t } = useAppTranslation();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -17,27 +21,28 @@ export default function HowToPlayScreen() {
           <View style={styles.iconBox}>
             <MaterialCommunityIcons name="lightbulb-outline" size={40} color="#e74c3c" />
           </View>
-          <ThemedText style={styles.title}>HOW TO PLAY</ThemedText>
+          <ThemedText style={styles.title}>{t("rules.title")}</ThemedText>
           <ThemedText style={styles.description}>
-            Explain the words to your teammates{" "}
-            <ThemedText style={styles.highlight}>without saying the word itself</ThemedText> or any
-            part of it!
+            <Trans
+              i18nKey="rules.description"
+              components={{ 1: <ThemedText style={styles.highlight} /> }}
+            />
           </ThemedText>
 
           <View style={styles.rulesList}>
             <View style={styles.ruleItem}>
               <MaterialCommunityIcons name="close-circle-outline" size={20} color="#e74c3c" />
-              <ThemedText style={styles.ruleText}>No translations or synonyms</ThemedText>
+              <ThemedText style={styles.ruleText}>{t("rules.no_translations")}</ThemedText>
             </View>
             <View style={styles.ruleItem}>
               <MaterialCommunityIcons name="check-circle-outline" size={20} color="#27ae60" />
-              <ThemedText style={styles.ruleText}>Be as creative as possible!</ThemedText>
+              <ThemedText style={styles.ruleText}>{t("rules.creative")}</ThemedText>
             </View>
           </View>
         </View>
 
         <View style={styles.sectionHeader}>
-          <ThemedText style={styles.sectionTitle}>GAME SETTINGS</ThemedText>
+          <ThemedText style={styles.sectionTitle}>{t("rules.game_settings")}</ThemedText>
         </View>
 
         <View style={styles.settingsGrid}>
@@ -46,10 +51,8 @@ export default function HowToPlayScreen() {
               <MaterialCommunityIcons name="account-group" size={24} color="#3498db" />
             </View>
             <View style={styles.settingContent}>
-              <ThemedText style={styles.settingLabel}>Groups</ThemedText>
-              <ThemedText style={styles.settingInfo}>
-                Choose between 2 to 5 competing teams.
-              </ThemedText>
+              <ThemedText style={styles.settingLabel}>{t("rules.groups.title")}</ThemedText>
+              <ThemedText style={styles.settingInfo}>{t("rules.groups.desc")}</ThemedText>
             </View>
           </View>
 
@@ -58,10 +61,8 @@ export default function HowToPlayScreen() {
               <MaterialCommunityIcons name="timer-sand" size={24} color="#f1c40f" />
             </View>
             <View style={styles.settingContent}>
-              <ThemedText style={styles.settingLabel}>Timer</ThemedText>
-              <ThemedText style={styles.settingInfo}>
-                Set the round duration from 30 to 120 seconds.
-              </ThemedText>
+              <ThemedText style={styles.settingLabel}>{t("rules.timer.title")}</ThemedText>
+              <ThemedText style={styles.settingInfo}>{t("rules.timer.desc")}</ThemedText>
             </View>
           </View>
 
@@ -70,10 +71,8 @@ export default function HowToPlayScreen() {
               <MaterialCommunityIcons name="translate" size={24} color="#9b59b2" />
             </View>
             <View style={styles.settingContent}>
-              <ThemedText style={styles.settingLabel}>Language</ThemedText>
-              <ThemedText style={styles.settingInfo}>
-                Select the word bank language (English or Hebrew).
-              </ThemedText>
+              <ThemedText style={styles.settingLabel}>{t("rules.language.title")}</ThemedText>
+              <ThemedText style={styles.settingInfo}>{t("rules.language.desc")}</ThemedText>
             </View>
           </View>
 
@@ -82,10 +81,8 @@ export default function HowToPlayScreen() {
               <MaterialCommunityIcons name="trophy" size={24} color="#2ecc71" />
             </View>
             <View style={styles.settingContent}>
-              <ThemedText style={styles.settingLabel}>Target Points</ThemedText>
-              <ThemedText style={styles.settingInfo}>
-                Determine the score needed to claim victory (50-150).
-              </ThemedText>
+              <ThemedText style={styles.settingLabel}>{t("rules.target_points.title")}</ThemedText>
+              <ThemedText style={styles.settingInfo}>{t("rules.target_points.desc")}</ThemedText>
             </View>
           </View>
 
@@ -94,12 +91,10 @@ export default function HowToPlayScreen() {
               <MaterialCommunityIcons name="flash" size={24} color="#e74c3c" />
             </View>
             <View style={styles.settingContent}>
-              <ThemedText style={styles.settingLabel}>Last Word for All</ThemedText>
-              <ThemedText style={styles.settingInfo}>
-                When time expires, all teams can guess the word and earn the point.
-              </ThemedText>
+              <ThemedText style={styles.settingLabel}>{t("rules.last_word_all.title")}</ThemedText>
+              <ThemedText style={styles.settingInfo}>{t("rules.last_word_all.desc")}</ThemedText>
               <ThemedText style={styles.settingInfoHighlight}>
-                Sounds on to hear the last 3 seconds of the timer.
+                {t("rules.last_word_all.notice")}
               </ThemedText>
             </View>
           </View>
@@ -109,17 +104,11 @@ export default function HowToPlayScreen() {
           <View style={styles.winIconBox}>
             <MaterialCommunityIcons name="crown" size={40} color="#f1c40f" />
           </View>
-          <ThemedText style={styles.sectionTitle}>HOW TO WIN</ThemedText>
-          <ThemedText style={styles.winDescription}>
-            The first team to reach the target points wins!
-          </ThemedText>
+          <ThemedText style={styles.sectionTitle}>{t("rules.how_to_win")}</ThemedText>
+          <ThemedText style={styles.winDescription}>{t("rules.win_desc")}</ThemedText>
           <View style={styles.fairPlayNotice}>
             <MaterialCommunityIcons name="information-outline" size={20} color="#f1c40f" />
-            <ThemedText style={styles.fairPlayText}>
-              To keep it fair, the game continues until all teams have finished their turns in the
-              current round. If multiple teams are over the target, the one with the highest score
-              wins!
-            </ThemedText>
+            <ThemedText style={styles.fairPlayText}>{t("rules.fair_play")}</ThemedText>
           </View>
         </View>
       </View>

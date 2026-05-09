@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
+    direction: "ltr",
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",

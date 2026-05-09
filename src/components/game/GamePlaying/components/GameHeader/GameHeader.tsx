@@ -3,6 +3,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { View } from "react-native";
 import { useTurnContext } from "@/context/TurnContext";
 import { styles } from "./style";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 interface GameHeaderProps {
   topInset: number;
@@ -10,11 +11,12 @@ interface GameHeaderProps {
 
 export function GameHeader({ topInset }: GameHeaderProps) {
   const { timeLeft, turnScore } = useTurnContext();
+  const { t } = useAppTranslation();
 
   return (
     <View style={[styles.container, { top: topInset + 20 }]}>
       <View style={styles.headerBlock}>
-        <ThemedText style={styles.headerLabel}>TIME LEFT</ThemedText>
+        <ThemedText style={styles.headerLabel}>{t("playing.time_left")}</ThemedText>
         <View style={styles.headerValRow}>
           <MaterialIcons name="timer" size={22} color="#e74c3c" />
           <ThemedText style={styles.headerVal}>{timeLeft}s</ThemedText>
@@ -22,7 +24,7 @@ export function GameHeader({ topInset }: GameHeaderProps) {
       </View>
 
       <View style={[styles.headerBlock, { alignItems: "flex-end" }]}>
-        <ThemedText style={styles.headerLabel}>POINTS</ThemedText>
+        <ThemedText style={styles.headerLabel}>{t("playing.points")}</ThemedText>
         <View style={styles.headerValRow}>
           <ThemedText style={styles.headerVal}>{turnScore}</ThemedText>
           <MaterialIcons name="star" size={22} color="#f1c40f" />

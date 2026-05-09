@@ -6,6 +6,7 @@ import { useGameContext } from "../../../context/GameContext";
 import { useTurnContext } from "../../../context/TurnContext";
 import { styles } from "./style";
 import { getTurnSummary } from "./utils";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 export function GameTurnEnd() {
   const {
@@ -17,6 +18,7 @@ export function GameTurnEnd() {
     lastWordWinner,
   } = useGameContext();
   const { turnScore, swipeHistory, toggleSwipe, isLastWordMode } = useTurnContext();
+  const { t } = useAppTranslation();
 
   const { correctWords, failedWords } = getTurnSummary(
     currentWordIndex,
@@ -29,13 +31,15 @@ export function GameTurnEnd() {
     <View style={styles.container}>
       {/* Header section */}
       <View style={styles.header}>
-        <ThemedText style={styles.mainTitle}>Round Over!</ThemedText>
-        <ThemedText style={styles.subTitle}>Team {currentGroup + 1}&apos;s Turn</ThemedText>
+        <ThemedText style={styles.mainTitle}>{t("playing.round_over")}</ThemedText>
+        <ThemedText style={styles.subTitle}>
+          {t("ready.team_turn", { number: currentGroup + 1 })}
+        </ThemedText>
       </View>
 
       {/* Points Earned Card */}
       <View style={styles.pointsCard}>
-        <ThemedText style={styles.pointsLabel}>POINTS EARNED</ThemedText>
+        <ThemedText style={styles.pointsLabel}>{t("playing.points_earned")}</ThemedText>
         <ThemedText style={[styles.pointsValue, { color: turnScore >= 0 ? "#2ecc71" : "#e74c3c" }]}>
           {turnScore > 0 ? `+${turnScore}` : turnScore}
         </ThemedText>
@@ -49,18 +53,18 @@ export function GameTurnEnd() {
             <View style={styles.listSection}>
               <View style={styles.listHeader}>
                 <MaterialCommunityIcons name="trophy-variant" size={20} color="#FFD700" />
-                <ThemedText style={styles.listTitle}>Last Word Winner</ThemedText>
+                <ThemedText style={styles.listTitle}>{t("playing.last_word_winner_title")}</ThemedText>
               </View>
               <View style={styles.lastWordWinnerStatusInfo}>
                 {lastWordWinner !== null ? (
                   <View style={styles.winnerInfoPill}>
                     <MaterialCommunityIcons name="star" size={20} color="#FFD700" />
                     <ThemedText style={styles.winnerInfoText}>
-                      TEAM {lastWordWinner + 1} EARNED THE POINT!
+                      {t("playing.team_earned_point", { number: lastWordWinner + 1 })}
                     </ThemedText>
                   </View>
                 ) : (
-                  <ThemedText style={styles.noWinnerInfoText}>NO TEAM GUESSED CORRECTLY</ThemedText>
+                  <ThemedText style={styles.noWinnerInfoText}>{t("playing.no_team_guessed")}</ThemedText>
                 )}
               </View>
             </View>
@@ -71,7 +75,7 @@ export function GameTurnEnd() {
             <View style={styles.listHeader}>
               <MaterialCommunityIcons name="check-circle" size={20} color="#2ecc71" />
               <ThemedText style={styles.listTitle}>
-                Guessed Correctly ({correctWords.length})
+                {t("playing.guessed_correctly", { count: correctWords.length })}
               </ThemedText>
             </View>
             {correctWords.map((entry) => (
@@ -99,7 +103,9 @@ export function GameTurnEnd() {
           <View style={styles.listSection}>
             <View style={styles.listHeader}>
               <MaterialCommunityIcons name="close-circle" size={20} color="#e74c3c" />
-              <ThemedText style={styles.listTitle}>Failed Words ({failedWords.length})</ThemedText>
+              <ThemedText style={styles.listTitle}>
+                {t("playing.failed_words", { count: failedWords.length })}
+              </ThemedText>
             </View>
             {failedWords.map((entry) => (
               <View key={entry.originalIndex} style={[styles.wordCard, styles.failedWordCard]}>
@@ -128,7 +134,7 @@ export function GameTurnEnd() {
         onPress={onProceedToNextGroup}
         activeOpacity={0.8}
       >
-        <ThemedText style={styles.nextButtonText}>NEXT TEAM&apos;S TURN</ThemedText>
+        <ThemedText style={styles.nextButtonText}>{t("playing.next_team_turn")}</ThemedText>
         <MaterialIcons name="arrow-forward" size={24} color="#fff" />
       </TouchableOpacity>
     </View>

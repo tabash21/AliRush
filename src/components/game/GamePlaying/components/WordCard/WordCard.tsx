@@ -3,10 +3,12 @@ import { useGameContext } from "@/context/GameContext";
 import { useTurnContext } from "@/context/TurnContext";
 import { Animated, View } from "react-native";
 import { styles } from "./style";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 export function WordCard() {
   const { currentWord } = useGameContext();
   const { isLastWordMode, pan, panResponderHandlers } = useTurnContext();
+  const { t } = useAppTranslation();
 
   // Interpolate side swipe to create dynamic border colors indicating the action
   const dynamicBorderColor = pan.x.interpolate({
@@ -36,7 +38,7 @@ export function WordCard() {
     >
       {isLastWordMode && (
         <View style={styles.lastWordBadge}>
-          <ThemedText style={styles.lastWordBadgeText}>LAST WORD!</ThemedText>
+          <ThemedText style={styles.lastWordBadgeText}>{t("playing.last_word")}</ThemedText>
         </View>
       )}
       <View style={styles.cardTextContainer}>

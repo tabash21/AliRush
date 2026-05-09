@@ -1,0 +1,19 @@
+{
+  "time_left": "זמן נותר",
+  "points": "נקודות",
+  "skip": "דלג",
+  "success": "הצלחה",
+  "last_word_winner": "מנצח מילה אחרונה!",
+  "who_guessed": "מי ניחש נכון?",
+  "team": "קבוצה {{number}}",
+  "no_one": "אף אחד",
+  "last_word": "מילה אחרונה!",
+  "round_over": "הסיבוב נגמר!",
+  "points_earned": "נקודות שנצברו",
+  "last_word_winner_title": "מנצח מילה אחרונה",
+  "team_earned_point": "קבוצה {{number}} זכתה בנקודה!",
+  "no_team_guessed": "אף קבוצה לא ניחשה נכון",
+  "guessed_correctly": "ניחשתם נכון ({{count}})",
+  "failed_words": "מילים שנכשלו ({{count}})",
+  "next_team_turn": "תור הקבוצה הבאה"
+}

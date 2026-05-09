@@ -1,0 +1,31 @@
+{
+  "title": "HOW TO PLAY",
+  "description": "Explain the words to your teammates <1>without saying the word itself</1> or any part of it!",
+  "no_translations": "No translations or synonyms",
+  "creative": "Be as creative as possible!",
+  "game_settings": "GAME SETTINGS",
+  "groups": {
+    "title": "Groups",
+    "desc": "Choose between 2 to 5 competing teams."
+  },
+  "timer": {
+    "title": "Timer",
+    "desc": "Set the round duration from 30 to 120 seconds."
+  },
+  "language": {
+    "title": "Language",
+    "desc": "Select the word bank language (English or Hebrew)."
+  },
+  "target_points": {
+    "title": "Target Points",
+    "desc": "Determine the score needed to claim victory (50-150)."
+  },
+  "last_word_all": {
+    "title": "Last Word for All",
+    "desc": "When time expires, all teams can guess the word and earn the point.",
+    "notice": "Sounds on to hear the last 3 seconds of the timer."
+  },
+  "how_to_win": "HOW TO WIN",
+  "win_desc": "The first team to reach the target points wins!",
+  "fair_play": "To keep it fair, the game continues until all teams have finished their turns in the current round. If multiple teams are over the target, the one with the highest score wins!"
+}
