@@ -6,9 +6,11 @@ import { useGameContext } from "../../../context/GameContext";
 import { GAMEOVER_COLORS } from "./consts";
 import { styles } from "./style";
 import { getRankedScores } from "./utils";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 export function GameOver() {
   const { groupScores, onReturnToSetup } = useGameContext();
+  const { t } = useAppTranslation();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
 
@@ -26,18 +28,18 @@ export function GameOver() {
         <View style={[styles.trophyContainer, { backgroundColor: isDark ? "#443C22" : "#FFF4E0" }]}>
           <Ionicons name="trophy" size={50} color={winnerColor} />
         </View>
-        <ThemedText style={styles.gameOverText}>GAME OVER</ThemedText>
+        <ThemedText style={styles.gameOverText}>{t("over.game_over")}</ThemedText>
         <View style={styles.winnerNameContainer}>
           <ThemedText style={[styles.winnerName, { color: winnerColor }]}>
-            {isDraw ? "ITS A DRAW!" : winners[0].name.toUpperCase()}
+            {isDraw ? t("over.its_a_draw") : winners[0].name.toUpperCase()}
           </ThemedText>
-          {!isDraw && <ThemedText style={styles.winsText}>WINS!</ThemedText>}
+          {!isDraw && <ThemedText style={styles.winsText}>{t("over.wins")}</ThemedText>}
         </View>
       </View>
 
       {/* Scoreboard Card */}
       <View style={[styles.card, { backgroundColor: cardBg }]}>
-        <ThemedText style={styles.cardTitle}>Final Scoreboard</ThemedText>
+        <ThemedText style={styles.cardTitle}>{t("over.final_scoreboard")}</ThemedText>
         <View style={[styles.divider, { backgroundColor: isDark ? "#444" : "#EEE" }]} />
 
         <ScrollView style={styles.scoreboardContent} nestedScrollEnabled={true}>
@@ -66,7 +68,7 @@ export function GameOver() {
                     {item.score}
                   </ThemedText>
                   <ThemedText style={[styles.ptsLabel, isWinner && styles.whiteText]}>
-                    PTS
+                    {t("over.pts")}
                   </ThemedText>
                 </View>
               </View>
@@ -81,7 +83,7 @@ export function GameOver() {
         onPress={onReturnToSetup}
       >
         <Ionicons name="refresh-outline" size={24} color="#FFF" style={{ marginRight: 10 }} />
-        <ThemedText style={styles.playAgainText}>PLAY AGAIN</ThemedText>
+        <ThemedText style={styles.playAgainText}>{t("over.play_again")}</ThemedText>
       </TouchableOpacity>
     </View>
   );

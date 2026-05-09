@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 import { HapticTab } from "@/components/common/haptic-tab";
 import { IconSymbol } from "@/components/common/icon-symbol";
@@ -42,6 +43,23 @@ function TabNavigator() {
           title: "Rules",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="questionmark.circle.fill" color={color} />
+          ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            if (gameState !== GameState.Setup) {
+              e.preventDefault();
+              setIsQuitModalVisible(true);
+            }
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="settings-sharp" color={color} />
           ),
         }}
         listeners={{

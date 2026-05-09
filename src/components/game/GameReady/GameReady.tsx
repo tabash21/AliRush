@@ -3,15 +3,18 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { useGameContext } from "../../../context/GameContext";
 import { styles } from "./style";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 export function GameReady() {
   const { currentGroup, groupScores, settings, onStartTurn } = useGameContext();
+  const { t } = useAppTranslation();
   const targetPoints = settings.targetPoints;
+  
   return (
     <View style={styles.centerContent}>
       <View style={styles.scoreboardCard}>
         <View style={styles.scoreboardHeader}>
-          <ThemedText style={styles.scoreboardLabel}>SCOREBOARD</ThemedText>
+          <ThemedText style={styles.scoreboardLabel}>{t("ready.scoreboard")}</ThemedText>
         </View>
 
         <ScrollView style={styles.scoreboardContent} nestedScrollEnabled={true}>
@@ -23,7 +26,7 @@ export function GameReady() {
               <View key={index} style={styles.teamRow}>
                 <View style={styles.teamRowHeader}>
                   <ThemedText style={[styles.teamNameText, isActive && styles.activeTeamText]}>
-                    Team {index + 1}
+                    {t("ready.team", { number: index + 1 })}
                   </ThemedText>
                   <ThemedText style={[styles.teamScoreText, isActive && styles.activeScoreText]}>
                     {score}/{targetPoints}
@@ -45,8 +48,8 @@ export function GameReady() {
       </View>
 
       <View style={styles.headerContainer}>
-        <ThemedText style={styles.teamTitle}>Team {currentGroup + 1}'s Turn</ThemedText>
-        <ThemedText style={styles.mainTitle}>Get Ready!</ThemedText>
+        <ThemedText style={styles.teamTitle}>{t("ready.team_turn", { number: currentGroup + 1 })}</ThemedText>
+        <ThemedText style={styles.mainTitle}>{t("ready.get_ready")}</ThemedText>
       </View>
 
       <View style={styles.middleActionContainer}>
@@ -58,7 +61,7 @@ export function GameReady() {
           >
             <View style={styles.actionInnerCircle}>
               <MaterialCommunityIcons name="gesture-tap" size={56} color="#fff" />
-              <ThemedText style={styles.actionButtonText}>TAP TO START</ThemedText>
+              <ThemedText style={styles.actionButtonText}>{t("ready.tap_to_start")}</ThemedText>
             </View>
           </TouchableOpacity>
         </View>

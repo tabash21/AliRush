@@ -7,8 +7,8 @@ export enum GameState {
 }
 
 export enum Language {
-  English = "eng",
-  Hebrew = "heb",
+  English = "en",
+  Hebrew = "he",
 }
 
 export interface GameSettings {

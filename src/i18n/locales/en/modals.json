@@ -1,0 +1,8 @@
+{
+  "exit": {
+    "title": "Quit Game?",
+    "message": "Are you sure you want to quit the current game? All progress and scores will be lost.",
+    "confirm": "QUIT ANYWAY",
+    "cancel": "CANCEL"
+  }
+}

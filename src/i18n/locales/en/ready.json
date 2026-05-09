@@ -1,0 +1,8 @@
+{
+  "scoreboard": "SCOREBOARD",
+  "team": "Team {{number}}",
+  "turn": "Turn",
+  "team_turn": "Team {{number}}'s Turn",
+  "get_ready": "Get Ready!",
+  "tap_to_start": "TAP TO START"
+}

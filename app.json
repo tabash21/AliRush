@@ -4,7 +4,7 @@
     "slug": "WordRush",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/wordRush-icon.png",
+    "icon": "./src/assets/images/wordRush-icon.png",
     "scheme": "wordrush",
     "userInterfaceStyle": "automatic",
     "ios": {
@@ -13,9 +13,9 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/wordRush-squre.png",
-        "backgroundImage": "./assets/images/wordRush-squre.png",
-        "monochromeImage": "./assets/images/wordRush-squre.png"
+        "foregroundImage": "./src/assets/images/wordRush-squre.png",
+        "backgroundImage": "./src/assets/images/wordRush-squre.png",
+        "monochromeImage": "./src/assets/images/wordRush-squre.png"
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.tabash21.wordrush",
@@ -26,14 +26,14 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/wordRush-squre.png"
+      "favicon": "./src/assets/images/wordRush-squre.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/wordRush-squre.png",
+          "image": "./src/assets/images/wordRush-squre.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",

@@ -4,6 +4,7 @@ import { TouchableOpacity, View } from "react-native";
 import { GameSettings, Language } from "../../../types/game";
 import { GAMESETUP_COLORS } from "./consts";
 import { styles } from "./style";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 interface SetupProps {
   settings: GameSettings;
@@ -12,10 +13,12 @@ interface SetupProps {
 }
 
 export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
+  const { t } = useAppTranslation();
+  
   const updateSetting = <K extends keyof GameSettings>(key: K, value: GameSettings[K]) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
-
+  
   const primaryRed = GAMESETUP_COLORS.primaryRed;
 
   return (
@@ -24,7 +27,7 @@ export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
       <View style={styles.settingContainer}>
         <View style={styles.labelRow}>
           <Ionicons name="people" size={18} color={primaryRed} />
-          <ThemedText style={styles.sectionLabel}>GROUP NUMBER</ThemedText>
+          <ThemedText style={styles.sectionLabel}>{t("setup.group_number")}</ThemedText>
         </View>
         <View style={styles.chipRow}>
           {[2, 3, 4, 5].map((num) => (
@@ -55,7 +58,7 @@ export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
       <View style={styles.settingContainer}>
         <View style={styles.labelRow}>
           <Ionicons name="timer-outline" size={18} color={primaryRed} />
-          <ThemedText style={styles.sectionLabel}>TIME PER ROUND</ThemedText>
+          <ThemedText style={styles.sectionLabel}>{t("setup.time_per_round")}</ThemedText>
         </View>
         <View style={styles.timerGrid}>
           {[
@@ -91,7 +94,7 @@ export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
       <View style={styles.settingContainer}>
         <View style={styles.labelRow}>
           <Ionicons name="globe-outline" size={18} color={primaryRed} />
-          <ThemedText style={styles.sectionLabel}>LANGUAGE</ThemedText>
+          <ThemedText style={styles.sectionLabel}>{t("setup.language")}</ThemedText>
         </View>
         <View style={styles.chipRow}>
           {[
@@ -128,7 +131,7 @@ export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
       <View style={styles.settingContainer}>
         <View style={styles.labelRow}>
           <Ionicons name="trophy-outline" size={18} color={primaryRed} />
-          <ThemedText style={styles.sectionLabel}>TARGET POINTS</ThemedText>
+          <ThemedText style={styles.sectionLabel}>{t("setup.target_points")}</ThemedText>
         </View>
         <View style={styles.stepperPill}>
           <TouchableOpacity
@@ -151,7 +154,7 @@ export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
       <View style={styles.settingContainer}>
         <View style={styles.labelRow}>
           <Ionicons name="flash-outline" size={18} color={primaryRed} />
-          <ThemedText style={styles.sectionLabel}>LAST WORD FOR ALL</ThemedText>
+          <ThemedText style={styles.sectionLabel}>{t("setup.last_word_for_all")}</ThemedText>
         </View>
         <TouchableOpacity
           style={[
@@ -166,7 +169,7 @@ export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
           onPress={() => updateSetting("lastWordForAll", !settings.lastWordForAll)}
         >
           <ThemedText style={[styles.chipText, settings.lastWordForAll && { color: "#fff" }]}>
-            {settings.lastWordForAll ? "ACTIVE" : "INACTIVE"}
+            {settings.lastWordForAll ? t("setup.active") : t("setup.inactive")}
           </ThemedText>
           <Ionicons
             name={settings.lastWordForAll ? "checkmark-circle" : "ellipse-outline"}
@@ -181,7 +184,7 @@ export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
         onPress={onStartGame}
       >
         <Ionicons name="play" size={22} color="#fff" />
-        <ThemedText style={styles.playButtonText}>START GAME</ThemedText>
+        <ThemedText style={styles.playButtonText}>{t("setup.start_game")}</ThemedText>
       </TouchableOpacity>
     </View>
   );

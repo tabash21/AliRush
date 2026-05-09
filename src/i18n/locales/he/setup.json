@@ -1,0 +1,11 @@
+{
+  "title": "הגדרות משחק",
+  "group_number": "מספר קבוצות",
+  "time_per_round": "זמן לסיבוב",
+  "language": "שפה",
+  "target_points": "יעד נקודות",
+  "last_word_for_all": "מילה אחרונה לכולם",
+  "active": "פעיל",
+  "inactive": "לא פעיל",
+  "start_game": "התחל משחק"
+}

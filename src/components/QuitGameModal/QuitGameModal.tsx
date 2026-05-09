@@ -2,9 +2,11 @@ import { ThemedText } from "@/components/common/themed-text";
 import { useGameContext } from "@/context/GameContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useAppTranslation } from "@/hooks/useAppTranslation";
 
 export function QuitGameModal() {
   const { isQuitModalVisible, setIsQuitModalVisible, onReturnToSetup } = useGameContext();
+  const { t } = useAppTranslation();
 
   if (!isQuitModalVisible) return null;
 
@@ -21,9 +23,9 @@ export function QuitGameModal() {
             <MaterialCommunityIcons name="alert-circle-outline" size={48} color="#e74c3c" />
           </View>
 
-          <ThemedText style={styles.title}>Quit Game?</ThemedText>
+          <ThemedText style={styles.title}>{t("modals.exit.title")}</ThemedText>
           <ThemedText style={styles.message}>
-            Are you sure you want to quit the current game? All progress and scores will be lost.
+            {t("modals.exit.message")}
           </ThemedText>
 
           <View style={styles.buttonContainer}>
@@ -31,14 +33,14 @@ export function QuitGameModal() {
               style={[styles.button, styles.cancelButton]}
               onPress={() => setIsQuitModalVisible(false)}
             >
-              <ThemedText style={styles.cancelText}>CANCEL</ThemedText>
+              <ThemedText style={styles.cancelText}>{t("modals.exit.cancel")}</ThemedText>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[styles.button, styles.quitButton]}
               onPress={() => onReturnToSetup()}
             >
-              <ThemedText style={styles.quitText}>QUIT ANYWAY</ThemedText>
+              <ThemedText style={styles.quitText}>{t("modals.exit.confirm")}</ThemedText>
             </TouchableOpacity>
           </View>
         </View>
