@@ -1,7 +1,8 @@
 {
   "title": "HOW TO PLAY",
   "description": "Explain the words to your teammates <1>without saying the word itself</1> or any part of it!",
-  "no_translations": "No translations or synonyms",
+  "no_translations": "No direct translations",
+  "no_root_words": "No same root words",
   "creative": "Be as creative as possible!",
   "game_settings": "GAME SETTINGS",
   "groups": {

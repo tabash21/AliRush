@@ -35,6 +35,10 @@ export default function HowToPlayScreen() {
               <ThemedText style={styles.ruleText}>{t("rules.no_translations")}</ThemedText>
             </View>
             <View style={styles.ruleItem}>
+              <MaterialCommunityIcons name="close-circle-outline" size={20} color="#e74c3c" />
+              <ThemedText style={styles.ruleText}>{t("rules.no_root_words")}</ThemedText>
+            </View>
+            <View style={styles.ruleItem}>
               <MaterialCommunityIcons name="check-circle-outline" size={20} color="#27ae60" />
               <ThemedText style={styles.ruleText}>{t("rules.creative")}</ThemedText>
             </View>
