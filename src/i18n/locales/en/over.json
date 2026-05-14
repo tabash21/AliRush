@@ -4,5 +4,6 @@
   "wins": "WINS!",
   "final_scoreboard": "Final Scoreboard",
   "pts": "PTS",
-  "play_again": "PLAY AGAIN"
+  "play_again": "PLAY AGAIN",
+  "team": "Team {{number}}"
 }

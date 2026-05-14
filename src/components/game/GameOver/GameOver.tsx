@@ -31,7 +31,9 @@ export function GameOver() {
         <ThemedText style={styles.gameOverText}>{t("over.game_over")}</ThemedText>
         <View style={styles.winnerNameContainer}>
           <ThemedText style={[styles.winnerName, { color: winnerColor }]}>
-            {isDraw ? t("over.its_a_draw") : winners[0].name.toUpperCase()}
+            {isDraw
+              ? t("over.its_a_draw")
+              : t("over.team", { number: winners[0].groupNumber }).toUpperCase()}
           </ThemedText>
           {!isDraw && <ThemedText style={styles.winsText}>{t("over.wins")}</ThemedText>}
         </View>
@@ -60,7 +62,7 @@ export function GameOver() {
                     {index + 1}.
                   </ThemedText>
                   <ThemedText style={[styles.groupName, isWinner && styles.whiteText]}>
-                    {item.name}
+                    {t("over.team", { number: item.groupNumber })}
                   </ThemedText>
                 </View>
                 <View style={styles.rowRight}>

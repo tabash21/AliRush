@@ -15,5 +15,9 @@
   "no_team_guessed": "NO TEAM GUESSED CORRECTLY",
   "guessed_correctly": "Guessed Correctly ({{count}})",
   "failed_words": "Failed Words ({{count}})",
-  "next_team_turn": "NEXT TEAM'S TURN"
+  "next_team_turn": "NEXT TEAM'S TURN",
+  "action_footer_last_word_title": "ALL TEAMS CAN GUESS!",
+  "action_footer_last_word_subtitle": "Swipe when someone wins",
+  "action_footer_undo": "Undo Swipe",
+  "action_footer_swipe_hint": "« Swipe Left or Right »"
 }

@@ -28,23 +28,3 @@ WordRush Game
 
 1. English
 2. Hebrew
-
-## Game Images
-
-<p float="left">
-  <img src="./assets/images/home.jpeg" width="250" />
-  <img src="./assets/images/rules.jpeg" width="250" />
-  <img src="./assets/images/over.jpeg" width="250" />
-</p>
-
-<p float="left">
-  <img src="./assets/images/skip.jpeg" width="250" />
-  <img src="./assets/images/game.jpeg" width="250" />
-  <img src="./assets/images/success.jpeg" width="250" />
-</p>
-
-<p float="left">
-  <img src="./assets/images/last.jpeg" width="250" />
-  <img src="./assets/images/ready.jpeg" width="250" />
-  <img src="./assets/images/win.jpeg" width="250" />
-</p>

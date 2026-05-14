@@ -1,6 +1,6 @@
 export const getRankedScores = (groupScores: number[]) => {
   const rankedScores = groupScores
-    .map((score, index) => ({ name: `Group ${index + 1}`, score, index }))
+    .map((score, index) => ({ groupNumber: index + 1, score, index }))
     .sort((a, b) => b.score - a.score);
 
   const topScore = rankedScores[0].score;

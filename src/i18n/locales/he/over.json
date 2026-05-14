@@ -1,8 +1,9 @@
 {
   "game_over": "סוף המשחק",
   "its_a_draw": "תיקו!",
-  "wins": "ניצחון!",
+  "wins": "ניצחו!",
   "final_scoreboard": "לוח תוצאות סופי",
   "pts": "נק'",
-  "play_again": "שחק שוב"
+  "play_again": "שחק שוב",
+  "team": "קבוצה {{number}}"
 }

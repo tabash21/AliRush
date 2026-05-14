@@ -27,7 +27,7 @@ function TabNavigator() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t("tabs:home"),
+          title: t("tabs.home"),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
         listeners={{
@@ -42,7 +42,7 @@ function TabNavigator() {
       <Tabs.Screen
         name="how-to-play"
         options={{
-          title: t("tabs:rules"),
+          title: t("tabs.rules"),
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="questionmark.circle.fill" color={color} />
           ),
@@ -59,7 +59,7 @@ function TabNavigator() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: t("tabs:settings"),
+          title: t("tabs.settings"),
           tabBarIcon: ({ color }) => (
             <Ionicons size={28} name="settings-sharp" color={color} />
           ),

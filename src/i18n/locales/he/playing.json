@@ -15,5 +15,9 @@
   "no_team_guessed": "אף קבוצה לא ניחשה נכון",
   "guessed_correctly": "ניחשתם נכון ({{count}})",
   "failed_words": "מילים שנכשלו ({{count}})",
-  "next_team_turn": "תור הקבוצה הבאה"
+  "next_team_turn": "תור הקבוצה הבאה",
+  "action_footer_last_word_title": "כל הקבוצות יכולות לנחש!",
+  "action_footer_last_word_subtitle": "החליקו כשמישהו מנצח",
+  "action_footer_undo": "ביטול החלקה",
+  "action_footer_swipe_hint": "« החליקו שמאלה או ימינה »"
 }
