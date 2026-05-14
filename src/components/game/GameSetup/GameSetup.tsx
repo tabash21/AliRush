@@ -183,8 +183,8 @@ export function GameSetup({ settings, setSettings, onStartGame }: SetupProps) {
         style={[styles.playButton, { backgroundColor: primaryRed }]}
         onPress={onStartGame}
       >
-        <Ionicons name="play" size={22} color="#fff" />
         <ThemedText style={styles.playButtonText}>{t("setup.start_game")}</ThemedText>
+        <Ionicons name="play" size={22} color="#fff" />
       </TouchableOpacity>
     </View>
   );

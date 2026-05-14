@@ -42,7 +42,10 @@
           }
         }
       ],
-      "expo-audio"
+      "expo-audio",
+      "expo-localization",
+      "expo-secure-store",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

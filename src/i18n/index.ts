@@ -13,6 +13,7 @@ import enModals from "./locales/en/modals.json";
 import enWinner from "./locales/en/winner.json";
 import enPlaying from "./locales/en/playing.json";
 import enRules from "./locales/en/rules.json";
+import enTabs from "./locales/en/tabs.json";
 
 import heCommon from "./locales/he/common.json";
 import heSetup from "./locales/he/setup.json";
@@ -22,6 +23,7 @@ import heModals from "./locales/he/modals.json";
 import heWinner from "./locales/he/winner.json";
 import hePlaying from "./locales/he/playing.json";
 import heRules from "./locales/he/rules.json";
+import heTabs from "./locales/he/tabs.json";
 
 const LANGUAGE_KEY = "user-language";
 
@@ -36,6 +38,7 @@ const resources = {
       winner: enWinner,
       playing: enPlaying,
       rules: enRules,
+      tabs: enTabs,
     },
   },
   he: {
@@ -48,6 +51,7 @@ const resources = {
       winner: heWinner,
       playing: hePlaying,
       rules: heRules,
+      tabs: heTabs,
     },
   },
 };

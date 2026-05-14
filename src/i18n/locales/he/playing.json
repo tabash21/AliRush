@@ -1,8 +1,8 @@
 {
-  "time_left": "זמן נותר",
+  "time_left": "זמן שנותר",
   "points": "נקודות",
   "skip": "דלג",
-  "success": "הצלחה",
+  "success": "הצלחתי",
   "last_word_winner": "מנצח מילה אחרונה!",
   "who_guessed": "מי ניחש נכון?",
   "team": "קבוצה {{number}}",

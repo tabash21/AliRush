@@ -1,12 +1,16 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { GameSettings, GameState, Language } from "../../types/game";
+import { DEFAULT_GAME_SETTINGS } from "./constants";
 import { GameContextType } from "./types";
 
-export const GameContext = createContext<GameContextType | undefined>(undefined);
+export const GameContext = createContext<GameContextType | undefined>(
+  undefined,
+);
 
 export function useGameContext() {
   const context = useContext(GameContext);
-  if (!context) throw new Error("useGameContext must be used within GameContext.Provider");
+  if (!context)
+    throw new Error("useGameContext must be used within GameContext.Provider");
   return context;
 }
 
@@ -15,13 +19,7 @@ interface GameProviderProps {
 }
 
 export function GameProvider({ children }: GameProviderProps) {
-  const [settings, setSettings] = useState<GameSettings>({
-    groupCount: 2,
-    language: Language.English,
-    roundTimer: 60,
-    targetPoints: 90,
-    lastWordForAll: true,
-  });
+  const [settings, setSettings] = useState<GameSettings>(DEFAULT_GAME_SETTINGS);
 
   const [gameState, setGameState] = useState<GameState>(GameState.Setup);
   const [groupScores, setGroupScores] = useState<number[]>([]);
@@ -104,7 +102,9 @@ export function GameProvider({ children }: GameProviderProps) {
   };
 
   const currentWord =
-    currentWordIndex < currentWords.length ? currentWords[currentWordIndex] : "No more words!";
+    currentWordIndex < currentWords.length
+      ? currentWords[currentWordIndex]
+      : "No more words!";
 
   const value: GameContextType = {
     settings,

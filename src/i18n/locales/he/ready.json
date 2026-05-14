@@ -2,7 +2,7 @@
   "scoreboard": "לוח תוצאות",
   "team": "קבוצה {{number}}",
   "turn": "תור",
-  "team_turn": "תור קבוצה {{number}}",
-  "get_ready": "התכוננו!",
+  "team_turn": "התור של קבוצה {{number}}",
+  "get_ready": "מוכנים?",
   "tap_to_start": "לחצו להתחלה"
 }
